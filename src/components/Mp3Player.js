@@ -52,7 +52,12 @@ export default function Mp3Player(props) {
 
             {/* middle part */}
             <div className='middle'>
-                <audio ref={props.track} hidden={true} onTimeUpdate={props.rangeSlider} onLoadedData={props.firstLoad} />
+                <audio
+                    ref={props.track}
+                    hidden={true}
+                    onTimeUpdate={props.rangeSlider}
+                    onLoadedData={props.firstLoad}
+                />
                 <button onClick={props.prevSong} id="pre">
                 <span><FontAwesomeIcon icon="fa-solid fa-backward-step" /></span>
                 </button>
@@ -76,7 +81,7 @@ export default function Mp3Player(props) {
 
             {/* song duration part */}
             <div className='duration'>
-                <input type="range" min="0" max="100" value={props.duration.position} id="duration_slider" onChange={props.changeDuration} ref={props.slider} />
+                <input type="range" min="0" max="100" value={props.sliderPosition} id="duration_slider"  onChange={props.changeDuration} ref={props.slider} />
                 <p>{ getDurationInMinutes(props.displayDuration) } / {getDurationInMinutes(props.fullDuration)}</p>
             </div>
 

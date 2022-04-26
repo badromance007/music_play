@@ -17,6 +17,8 @@ function App() {
   const [fullDuration, setFullDuration] = useState(0) 
   const [mute, setMute] = useState(false)
 
+  const [sliderPosition, setSliderPosition] = useState(0)
+
   const play =  useRef()
   const recentVolume= useRef()
   const slider =  useRef()
@@ -77,9 +79,9 @@ function App() {
     // update slider position
     if(!isNaN(track.current.duration)){
       position = track.current.currentTime * (100 / track.current.duration);
-      slider.current.value = position;
-
+      
       setDisplayDuration(track.current.currentTime)
+      setSliderPosition(position)
     }
   
     // will run when the song is over
@@ -186,10 +188,23 @@ function App() {
 
   function changeDuration() {
     console.log('changeDuration')
-    setDuration({
-      position: slider.current.value,
-      currentTime: track.current.duration * (slider.current.value / 100)
-    })
+
+    let position = 0
+    let currentTime = 0
+          
+    // update slider position
+    if(!isNaN(track.current.duration)){
+      position = track.current.currentTime * (100 / track.current.duration)
+      currentTime = track.current.duration * (slider.current.value / 100)
+      
+      setDisplayDuration(track.current.currentTime)
+      setSliderPosition(position)
+
+      setDuration({
+        position: position,
+        currentTime: currentTime
+      })
+    }
   }
 
   function autoplaySwitch() {
@@ -235,6 +250,7 @@ function App() {
         auto_play={auto_play}
         firstLoad={firstLoad}
         fullDuration={fullDuration}
+        sliderPosition={sliderPosition}
       />
     </main>
   );
