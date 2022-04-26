@@ -62,7 +62,7 @@ export default function Mp3Player(props) {
                     ref={props.track}
                     hidden={true}
                     onTimeUpdate={props.songPlaying}
-                    onLoadedData={props.firstLoad}
+                    onLoadedData={props.audioLoaded}
                     onEnded={props.endSong}
                 />
                 <button onClick={props.prevSong} id="pre">

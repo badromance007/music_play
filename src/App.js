@@ -212,7 +212,7 @@ function App() {
     setMute(prevMute => !prevMute)
   }
 
-  function firstLoad() {
+  function audioLoaded() {
     console.log('audio Loaded')
 
     setFullDuration(track.current.duration)
@@ -250,7 +250,7 @@ function App() {
         currentPlayingTime={currentPlayingTime}
         autoplaySwitch={autoplaySwitch}
         auto_play={auto_play}
-        firstLoad={firstLoad}
+        audioLoaded={audioLoaded}
         fullDuration={fullDuration}
         sliderPosition={sliderPosition}
         endSong={endSong}
