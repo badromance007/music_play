@@ -6,8 +6,10 @@ import Mp3Player from './components/Mp3Player';
 function App() {
   const [songs, setSongs] = useState(songsData)
   const [isPlaying, setIsPlaying] = useState(false)
-
   const [currentIndex, setCurrentIndex] = useState(0)
+
+
+
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
   const [currentDuration, setCurrentDuration] = useState(0)
@@ -43,7 +45,7 @@ function App() {
     }
 
     // update title
-    document.title = songs[currentIndex].name
+    document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer
   }, [currentIndex])
 
   useEffect(() => {
@@ -226,7 +228,7 @@ function App() {
     setIsPlaying(prevState => !prevState)
     setDisplayDuration(0)
     setCurrentIndex(prevIndex => {
-      return prevIndex < songs.length - 1 ? prevIndex + 1 : prevIndex
+      return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
     })
   }
 
