@@ -18,7 +18,6 @@ export default function Mp3Player(props) {
             {/* song image */}
             <div className='image-track-container'>
                 <img
-                    ref={props.trackImage}
                     src={props.songs[props.currentIndex].img}
                     className={[props.isPlaying && 'blur-img']}
                 />

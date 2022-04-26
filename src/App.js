@@ -10,25 +10,21 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // volume states & slider
+  // volume states & slider and mute state
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
   const volumeSlider= useRef()
-
+  const [mute, setMute] = useState(false)
 
   const [currentDuration, setCurrentDuration] = useState(0)
   const [displayDuration, setDisplayDuration] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
-  const [mute, setMute] = useState(false)
-
   const [sliderPosition, setSliderPosition] = useState(0)
+  const slider =  useRef()
 
   const play =  useRef()
-  
-  const slider =  useRef()
   const auto_play =  useRef()
   const visualyzer = useRef()
-  const trackImage = useRef()
   const track = useRef()
 
   //  context
@@ -263,7 +259,6 @@ function App() {
         fullDuration={fullDuration}
         sliderPosition={sliderPosition}
         endSong={endSong}
-        trackImage={trackImage}
         visualyzer={visualyzer}
       />
     </main>
