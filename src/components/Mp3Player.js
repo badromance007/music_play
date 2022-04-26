@@ -29,7 +29,7 @@ export default function Mp3Player(props) {
                 />
             </div>
             <div className='volume'>
-                <p id='volume_show'>{ props.volume }</p>
+                <p id='volume--show'>{ props.volume }</p>
                 <span id="volume_icon" onClick={props.muteSound}>
                 {
                     props.mute

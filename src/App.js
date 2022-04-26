@@ -4,14 +4,16 @@ import { songsData } from './seeds/songsData';
 import Mp3Player from './components/Mp3Player';
 
 function App() {
+
+  // playlist states
   const [songs, setSongs] = useState(songsData)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-
-
+  // volume states & slider
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
+  const volumeSlider= useRef()
 
 
   const [currentDuration, setCurrentDuration] = useState(0)
@@ -22,7 +24,7 @@ function App() {
   const [sliderPosition, setSliderPosition] = useState(0)
 
   const play =  useRef()
-  const volumeSlider= useRef()
+  
   const slider =  useRef()
   const auto_play =  useRef()
   const visualyzer = useRef()
@@ -50,8 +52,8 @@ function App() {
     document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer
   }, [currentIndex])
 
+  // update track's volume when volume changed
   useEffect(() => {
-    // change track's volume when volume changed
     track.current.volume = volume / 100
   }, [volume])
 
@@ -60,8 +62,8 @@ function App() {
     track.current.currentTime = currentDuration;
   }, [currentDuration])
 
+  // change volume to 0 when mute = true, if not use previous volume state
   useEffect(() => {
-    // change volume when mute = true, if not use previous volume
     setVolume(prevSound => {
       if(!mute) {
         return prevVolume.current > 0 ? prevVolume.current : prevSound
@@ -101,7 +103,6 @@ function App() {
 
   // change volume
   function changeVolume() {
-    console.log('volume change')
     setVolume(volumeSlider.current.value)
   }
 
@@ -211,11 +212,12 @@ function App() {
   }
 
   function muteSound() {
-    setMute(prevMute => !prevMute)
-
+    // store previous volume for later resume when mute = false
     if (!mute) {
-      prevVolume.current = volume // store previous volume
+      prevVolume.current = volume
     }
+
+    setMute(prevMute => !prevMute)
   }
 
   function firstLoad() {
