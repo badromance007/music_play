@@ -22,7 +22,6 @@ function App() {
   const [durationSliderPosition, setDurationSliderPosition] = useState(0)
   const durationSlider =  useRef()
 
-  const play =  useRef()
   const auto_play =  useRef()
   const visualyzer = useRef()
   const track = useRef()
@@ -239,7 +238,6 @@ function App() {
         track={track}
         prevSong={prevSong}
         justPlay={justPlay}
-        play={play}
         isPlaying={isPlaying}
         nextSong={nextSong}
         changeDuration={changeDuration}

@@ -69,7 +69,7 @@ export default function Mp3Player(props) {
                 <span><FontAwesomeIcon icon="fa-solid fa-backward-step" /></span>
                 </button>
 
-                <button onClick={props.justPlay} id="play" ref={props.play}>
+                <button onClick={props.justPlay} id="play">
                 <span>
                     {
                     props.isPlaying
