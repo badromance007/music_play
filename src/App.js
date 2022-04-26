@@ -116,6 +116,7 @@ function App() {
     track.current.play();
 
     trackImage.current.classList.add('blur-img')
+    visualyzer.current.classList.remove('hidden')
 
     audioContext.current = audioContext.current || new AudioContext()
     audioSource.current = audioSource.current || audioContext.current.createMediaElementSource(track.current)
@@ -159,6 +160,7 @@ function App() {
   function pauseSong() {
     track.current.pause();
     trackImage.current.classList.remove('blur-img')
+    visualyzer.current.classList.add('hidden')
   }
 
   function prevSong() {
