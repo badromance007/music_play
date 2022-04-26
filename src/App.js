@@ -118,6 +118,12 @@ function App() {
     trackImage.current.classList.add('blur-img')
     visualyzer.current.classList.remove('hidden')
 
+    if (!audioContext.current) {
+      createVisualyzer();
+    }
+  }
+
+  function createVisualyzer() {
     audioContext.current = audioContext.current || new AudioContext()
     audioSource.current = audioSource.current || audioContext.current.createMediaElementSource(track.current)
     const analyser = audioContext.current.createAnalyser();
