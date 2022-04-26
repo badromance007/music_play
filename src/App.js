@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useRef, useState } from 'react';
 import { songsData } from './seeds/songsData';
 import Mp3Player from './components/Mp3Player';
+import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
 
 function App() {
 
@@ -22,9 +23,8 @@ function App() {
   const [durationSliderPosition, setDurationSliderPosition] = useState(0)
   const durationSlider = useRef()
 
-  // auto play next song
-  const [isAutoPlayNextSong, setIsAutoPlayNextSong] = useState(false)
-
+  // repeat state
+  const [repeat, setRepeat] = useState(NO_REPEAT)
 
   // audio track & visualiser
   const visualyzer = useRef()
@@ -199,10 +199,6 @@ function App() {
     }
   }
 
-  function autoplayNextSong() {
-    setIsAutoPlayNextSong(prevState => !prevState)
-  }
-
   function muteSound() {
     // store previous volume for later resume when mute = false
     if (!mute) {
@@ -222,17 +218,41 @@ function App() {
   function endSong() {
     console.log('track ended')
     
-    // go to next song if in auto play mode
-    if (isAutoPlayNextSong) {
+    // replay playlist from song 1 if in REPEAT PLAYLIST mode
+    if (repeat === REPEAT_PLAYLIST && currentIndex === songs.length - 1) {
       setCurrentPlayingTime(0)
-      setCurrentIndex(prevIndex => {
-        return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
-      })
+      setCurrentIndex(0)
+    } else if (repeat === REPEAT_ONE) {
+      setCurrentPlayingTime(0)
+      playSong()
     } else {
-      // stop song when ended if not in auto play mode
-      setIsPlaying(prevState => !prevState)
+      if (currentIndex === songs.length - 1 && repeat !== REPEAT_PLAYLIST) {
+        // stop song when ended if not in replay mode
+        setIsPlaying(prevState => !prevState)
+      } else {
+        setCurrentPlayingTime(0)
+        setCurrentIndex(prevIndex => {
+          return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
+        })
+        console.log('isplayingState = ', isPlaying)
+      }
     }
   }
+
+  function handleRepeat() {
+    setRepeat(prevState => {
+      if (prevState === NO_REPEAT) {
+        return REPEAT_PLAYLIST
+      } else if (prevState === REPEAT_PLAYLIST) {
+        return REPEAT_ONE
+      } else {
+        return NO_REPEAT
+      }
+    })
+  }
+
+  console.log('isplayingState = ', isPlaying)
+    
 
   return (
     <main>
@@ -253,13 +273,13 @@ function App() {
         changeDuration={changeDuration}
         durationSlider={durationSlider}
         currentPlayingTime={currentPlayingTime}
-        autoplayNextSong={autoplayNextSong}
         audioLoaded={audioLoaded}
         fullDuration={fullDuration}
         durationSliderPosition={durationSliderPosition}
         endSong={endSong}
         visualyzer={visualyzer}
-        isAutoPlayNextSong={isAutoPlayNextSong}
+        handleRepeat={handleRepeat}
+        repeat={repeat}
       />
     </main>
   );

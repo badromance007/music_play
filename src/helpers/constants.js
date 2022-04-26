@@ -1,0 +1,7 @@
+const NO_REPEAT = 0
+
+const REPEAT_PLAYLIST = 1
+
+const REPEAT_ONE = 2
+
+export { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE }
