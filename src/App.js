@@ -10,13 +10,13 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // volume states & slider and mute state
+  // volume states & volume slider and mute state
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
   const volumeSlider= useRef()
   const [mute, setMute] = useState(false)
 
-  const [currentDuration, setCurrentDuration] = useState(0)
+  // audio's duration states & duration slider
   const [displayDuration, setDisplayDuration] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
   const [sliderPosition, setSliderPosition] = useState(0)
@@ -52,11 +52,6 @@ function App() {
   useEffect(() => {
     track.current.volume = volume / 100
   }, [volume])
-
-  useEffect(() => {
-    // change track's currentTime when slider changed
-    track.current.currentTime = currentDuration;
-  }, [currentDuration])
 
   // change volume to 0 when mute = true, if not use previous volume state
   useEffect(() => {
@@ -192,14 +187,16 @@ function App() {
     let position = 0
     let currentTime = 0
           
-    // update slider position
+    // update slider position & track's currentTime
     if(!isNaN(track.current.duration)){
       position = track.current.currentTime * (100 / track.current.duration)
       currentTime = track.current.duration * (slider.current.value / 100)
       
       setDisplayDuration(track.current.currentTime)
       setSliderPosition(position)
-      setCurrentDuration(currentTime)
+
+      // change track's currentTime when slider changed
+      track.current.currentTime = currentTime;
     }
   }
 
@@ -249,7 +246,6 @@ function App() {
         play={play}
         isPlaying={isPlaying}
         nextSong={nextSong}
-        currentDuration={currentDuration}
         changeDuration={changeDuration}
         slider={slider}
         displayDuration={displayDuration}
