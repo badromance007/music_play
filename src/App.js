@@ -9,10 +9,7 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
-  const [duration, setDuration] = useState({
-    position: 0,
-    currentTime: 0
-  })
+  const [currentDuration, setCurrentDuration] = useState(0)
   const [displayDuration, setDisplayDuration] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
   const [mute, setMute] = useState(false)
@@ -23,8 +20,13 @@ function App() {
   const recentVolume= useRef()
   const slider =  useRef()
   const auto_play =  useRef()
-
+  const visualyzer = useRef()
+  const trackImage = useRef()
   const track = useRef()
+
+  //  context
+  const audioContext = useRef()
+  const audioSource = useRef()
 
   useEffect(() => { 
     // load track
@@ -50,8 +52,8 @@ function App() {
 
   useEffect(() => {
     // change track's currentTime when slider changed
-    track.current.currentTime = duration.currentTime;
-  }, [duration])
+    track.current.currentTime = currentDuration;
+  }, [currentDuration])
 
   useEffect(() => {
     // change volume when mute = true, if not use previous volume
@@ -83,19 +85,13 @@ function App() {
       setDisplayDuration(track.current.currentTime)
       setSliderPosition(position)
     }
-  
-    // will run when the song is over
-    if(track.current.ended){
-      // setPlayingSong(prevState => !prevState)
-      setCurrentIndex(prevIndex => {
-        return prevIndex < songs.length - 1 ? prevIndex + 1 : prevIndex
-      })
-    }
   }
+
+ 
 
   // reset song slider
   function resetSlider(){
-    slider.current.value = 0;
+    setSliderPosition(0)
   }
 
   // change volume
@@ -119,16 +115,14 @@ function App() {
   function playSong() {
     track.current.play();
 
-    document.querySelector('#track_image').classList.add('blur-img')
+    trackImage.current.classList.add('blur-img')
 
-    const visualizer = document.querySelector('.visualizer')
+    audioContext.current = audioContext.current || new AudioContext()
+    audioSource.current = audioSource.current || audioContext.current.createMediaElementSource(track.current)
+    const analyser = audioContext.current.createAnalyser();
 
-    const audioContext = new AudioContext()
-    const audioSource = audioContext.createMediaElementSource(track.current)
-    const analyser = audioContext.createAnalyser();
-
-    audioSource.connect(analyser)
-    analyser.connect(audioContext.destination)
+    audioSource.current.connect(analyser)
+    analyser.connect(audioContext.current.destination)
     analyser.fftSize = 64
 
     const bufferLength = analyser.frequencyBinCount
@@ -139,7 +133,7 @@ function App() {
         const element = document.createElement('span')
         element.classList.add('visualyzer--element')
         elements.push(element)
-        visualizer.appendChild(element)
+        visualyzer.current.appendChild(element)
     }
 
     const clamp = (num, min, max) => {
@@ -164,6 +158,7 @@ function App() {
 
   function pauseSong() {
     track.current.pause();
+    trackImage.current.classList.remove('blur-img')
   }
 
   function prevSong() {
@@ -199,11 +194,7 @@ function App() {
       
       setDisplayDuration(track.current.currentTime)
       setSliderPosition(position)
-
-      setDuration({
-        position: position,
-        currentTime: currentTime
-      })
+      setCurrentDuration(currentTime)
     }
   }
 
@@ -225,6 +216,15 @@ function App() {
     setFullDuration(track.current.duration)
   }
 
+  function endSong() {
+    // will run when the song is over
+    console.log('track ended')
+    // setPlayingSong(prevState => !prevState)
+    setCurrentIndex(prevIndex => {
+      return prevIndex < songs.length - 1 ? prevIndex + 1 : prevIndex
+    })
+  }
+
   return (
     <main>
       <Mp3Player 
@@ -242,7 +242,7 @@ function App() {
         play={play}
         playingSong={playingSong}
         nextSong={nextSong}
-        duration={duration}
+        currentDuration={currentDuration}
         changeDuration={changeDuration}
         slider={slider}
         displayDuration={displayDuration}
@@ -251,6 +251,9 @@ function App() {
         firstLoad={firstLoad}
         fullDuration={fullDuration}
         sliderPosition={sliderPosition}
+        endSong={endSong}
+        trackImage={trackImage}
+        visualyzer={visualyzer}
       />
     </main>
   );

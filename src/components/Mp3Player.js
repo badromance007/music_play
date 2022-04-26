@@ -17,9 +17,9 @@ export default function Mp3Player(props) {
             
             {/* song image */}
             <div className='image-track-container'>
-                <img id='track_image' src={props.songs[props.currentIndex].img}/>
+                <img ref={props.trackImage} src={props.songs[props.currentIndex].img}/>
 
-                <Visualyzer />
+                <Visualyzer visualyzer={props.visualyzer} />
             </div>
             <div className='volume'>
                 <p id='volume_show'>{ props.volume }</p>
@@ -57,6 +57,7 @@ export default function Mp3Player(props) {
                     hidden={true}
                     onTimeUpdate={props.rangeSlider}
                     onLoadedData={props.firstLoad}
+                    onEnded={props.endSong}
                 />
                 <button onClick={props.prevSong} id="pre">
                 <span><FontAwesomeIcon icon="fa-solid fa-backward-step" /></span>
@@ -82,7 +83,7 @@ export default function Mp3Player(props) {
             {/* song duration part */}
             <div className='duration'>
                 <input type="range" min="0" max="100" value={props.sliderPosition} id="duration_slider"  onChange={props.changeDuration} ref={props.slider} />
-                <p>{ getDurationInMinutes(props.displayDuration) } / {getDurationInMinutes(props.fullDuration)}</p>
+                <p>{ getDurationInMinutes(props.currentDuration) } / {getDurationInMinutes(props.fullDuration)}</p>
             </div>
 
             <button id='auto' onClick={props.autoplaySwitch} ref={props.auto_play}>Auto play <span><FontAwesomeIcon icon="fa-solid fa-circle-notch" /></span></button>
