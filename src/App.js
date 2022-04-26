@@ -188,7 +188,7 @@ function App() {
       position = track.current.currentTime * (100 / track.current.duration)
       currentTime = track.current.duration * (durationSlider.current.value / 100)
       
-      setCurrentPlayingTime(track.current.currentTime)
+      setCurrentPlayingTime(currentTime)
       setDurationSliderPosition(position)
 
       // change track's currentTime when duration slider changed
