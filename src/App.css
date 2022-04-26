@@ -40,9 +40,19 @@ main    {
 }
 
 /* song image */
-.left img {
-    height: 300px;
+.left .image-track-container {
+	height: 300px;
 	width: 80%;
+	border-radius: 15px;
+	box-shadow: 1px 0px 20px 12px rgba(240,240,240,0.2);
+}
+.left img {
+    /* height: 300px;
+	width: 80%;
+	border-radius: 15px;
+	box-shadow: 1px 0px 20px 12px rgba(240,240,240,0.2); */
+	height: 100%;
+	width: 100%;
 	border-radius: 15px;
 	box-shadow: 1px 0px 20px 12px rgba(240,240,240,0.2);
 }
@@ -207,3 +217,67 @@ input[type="range"]::-moz-range-thumb {
 	color: #fff;
 	text-align: center;
 }
+
+
+/* Visualyzer box */
+.blur-img {
+	filter: blur(30px);
+}
+
+.visualizer-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	filter: blur(5px) contrast(10);
+	mix-blend-mode: screen;
+
+	/* placing */
+	position: absolute;
+	left: 50%;
+	top: 46%;
+	transform: translate(-60%, -40%);
+}
+
+.visualizer-container {
+	padding: 50px;
+	background-color: #2a2a2a;
+}
+
+.visualizer {
+	position: relative;
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	/* background-color: #fff; */
+	transition: 0.5s;
+	transform: rotateX(180deg);
+}
+
+.visualizer--innercircle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 150px;
+	height: 150px;
+	background-color: #2a2a2a;
+	border-radius: 50%;
+	z-index: 10;
+}
+
+.visualyzer--element {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	border-top: 40px solid rgb(157, 171, 247);
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	transform-origin: top left;
+	transition: 0.25s;
+}
+/* end visualyzer box */

@@ -115,6 +115,48 @@ function App() {
 
   function playSong() {
     track.current.play();
+
+    document.querySelector('#track_image').classList.add('blur-img')
+
+    const visualizer = document.querySelector('.visualizer')
+
+    const audioContext = new AudioContext()
+    const audioSource = audioContext.createMediaElementSource(track.current)
+    const analyser = audioContext.createAnalyser();
+
+    audioSource.connect(analyser)
+    analyser.connect(audioContext.destination)
+    analyser.fftSize = 64
+
+    const bufferLength = analyser.frequencyBinCount
+    let dataArray = new Uint8Array(bufferLength)
+
+    let elements = []
+    for(let i = 0; i < bufferLength; i++) {
+        const element = document.createElement('span')
+        element.classList.add('visualyzer--element')
+        elements.push(element)
+        visualizer.appendChild(element)
+    }
+
+    const clamp = (num, min, max) => {
+        if (num >= max) return max
+        if (num <= min) return min
+        return num
+    }
+
+    function animate() {
+        requestAnimationFrame(animate)
+        analyser.getByteFrequencyData(dataArray)
+        
+        for(let i = 0; i < bufferLength; i++) {
+            let item = dataArray[i]
+            item = item > 90 ? item / 3 : item * 1.95
+            elements[i].style.transform = `rotateZ(${i * (360 / bufferLength)}deg) translate(-50%, ${clamp(item, 60, 90)}px)`
+        }
+    }
+
+    animate()
   }
 
   function pauseSong() {

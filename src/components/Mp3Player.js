@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getDurationInMinutes } from '../helpers/functions'
+import Visualyzer from './Visualyzer'
 
 export default function Mp3Player(props) {
     return (
@@ -15,7 +16,11 @@ export default function Mp3Player(props) {
             <div className='left'>
             
             {/* song image */}
-            <img id='track_image' src={props.songs[props.currentIndex].img}/>
+            <div className='image-track-container'>
+                <img id='track_image' src={props.songs[props.currentIndex].img}/>
+
+                <Visualyzer />
+            </div>
             <div className='volume'>
                 <p id='volume_show'>{ props.volume }</p>
                 <span id="volume_icon" onClick={props.muteSound}>
