@@ -14,6 +14,7 @@ function App() {
     currentTime: 0
   })
   const [displayDuration, setDisplayDuration] = useState(0)
+  const [fullDuration, setFullDuration] = useState(0) 
   const [mute, setMute] = useState(false)
 
   const play =  useRef()
@@ -203,6 +204,12 @@ function App() {
     }
   }
 
+  function firstLoad() {
+    console.log('audio Loaded')
+
+    setFullDuration(track.current.duration)
+  }
+
   return (
     <main>
       <Mp3Player 
@@ -226,6 +233,8 @@ function App() {
         displayDuration={displayDuration}
         autoplaySwitch={autoplaySwitch}
         auto_play={auto_play}
+        firstLoad={firstLoad}
+        fullDuration={fullDuration}
       />
     </main>
   );
