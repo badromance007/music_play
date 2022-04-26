@@ -17,7 +17,7 @@ function App() {
   const [mute, setMute] = useState(false)
 
   // audio's duration states & duration slider
-  const [displayDuration, setDisplayDuration] = useState(0)
+  const [currentPlayingTime, setCurrentPlayingTime] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
   const [sliderPosition, setSliderPosition] = useState(0)
   const slider =  useRef()
@@ -72,15 +72,14 @@ function App() {
     track.current.load();
   }
 
-  function rangeSlider(){
-    console.log('Calling rangeSlider (onTimeUpdate event): ', track.current.duration) 
+  function songPlaying(){
     let position = 0;
           
     // update slider position
     if(!isNaN(track.current.duration)){
       position = track.current.currentTime * (100 / track.current.duration);
       
-      setDisplayDuration(track.current.currentTime)
+      setCurrentPlayingTime(track.current.currentTime)
       setSliderPosition(position)
     }
   }
@@ -192,7 +191,7 @@ function App() {
       position = track.current.currentTime * (100 / track.current.duration)
       currentTime = track.current.duration * (slider.current.value / 100)
       
-      setDisplayDuration(track.current.currentTime)
+      setCurrentPlayingTime(track.current.currentTime)
       setSliderPosition(position)
 
       // change track's currentTime when slider changed
@@ -223,7 +222,7 @@ function App() {
     // will run when the song is over
     console.log('track ended')
     setIsPlaying(prevState => !prevState)
-    setDisplayDuration(0)
+    setCurrentPlayingTime(0)
     setCurrentIndex(prevIndex => {
       return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
     })
@@ -239,7 +238,7 @@ function App() {
         mute={mute}
         changeVolume={changeVolume}
         volumeSlider={volumeSlider}
-        rangeSlider={rangeSlider}
+        songPlaying={songPlaying}
         track={track}
         prevSong={prevSong}
         justPlay={justPlay}
@@ -248,7 +247,7 @@ function App() {
         nextSong={nextSong}
         changeDuration={changeDuration}
         slider={slider}
-        displayDuration={displayDuration}
+        currentPlayingTime={currentPlayingTime}
         autoplaySwitch={autoplaySwitch}
         auto_play={auto_play}
         firstLoad={firstLoad}

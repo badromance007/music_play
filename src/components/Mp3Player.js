@@ -61,7 +61,7 @@ export default function Mp3Player(props) {
                 <audio
                     ref={props.track}
                     hidden={true}
-                    onTimeUpdate={props.rangeSlider}
+                    onTimeUpdate={props.songPlaying}
                     onLoadedData={props.firstLoad}
                     onEnded={props.endSong}
                 />
@@ -89,7 +89,7 @@ export default function Mp3Player(props) {
             {/* song duration part */}
             <div className='duration'>
                 <input type="range" min="0" max="100" value={props.sliderPosition} id="duration_slider"  onChange={props.changeDuration} ref={props.slider} />
-                <p>{ getDurationInMinutes(props.displayDuration) } / {getDurationInMinutes(props.fullDuration)}</p>
+                <p>{ getDurationInMinutes(props.currentPlayingTime) } / {getDurationInMinutes(props.fullDuration)}</p>
             </div>
 
             <button id='auto' onClick={props.autoplaySwitch} ref={props.auto_play}>Auto play <span><FontAwesomeIcon icon="fa-solid fa-circle-notch" /></span></button>
