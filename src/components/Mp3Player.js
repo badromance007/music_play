@@ -88,7 +88,7 @@ export default function Mp3Player(props) {
 
             {/* song duration part */}
             <div className='duration'>
-                <input type="range" min="0" max="100" value={props.sliderPosition} id="duration_slider"  onChange={props.changeDuration} ref={props.slider} />
+                <input type="range" min="0" max="100" value={props.durationSliderPosition}  onChange={props.changeDuration} ref={props.durationSlider} />
                 <p>{ getDurationInMinutes(props.currentPlayingTime) } / {getDurationInMinutes(props.fullDuration)}</p>
             </div>
 

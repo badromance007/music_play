@@ -19,8 +19,8 @@ function App() {
   // audio's duration states & duration slider
   const [currentPlayingTime, setCurrentPlayingTime] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
-  const [sliderPosition, setSliderPosition] = useState(0)
-  const slider =  useRef()
+  const [durationSliderPosition, setDurationSliderPosition] = useState(0)
+  const durationSlider =  useRef()
 
   const play =  useRef()
   const auto_play =  useRef()
@@ -66,7 +66,7 @@ function App() {
 
   function loadTrack() {
     console.log('load track')
-    resetSlider()
+    resetDurationSlider()
 
     track.current.src = songs[currentIndex].path;
     track.current.load();
@@ -80,15 +80,12 @@ function App() {
       position = track.current.currentTime * (100 / track.current.duration);
       
       setCurrentPlayingTime(track.current.currentTime)
-      setSliderPosition(position)
+      setDurationSliderPosition(position)
     }
   }
 
- 
-
-  // reset song slider
-  function resetSlider(){
-    setSliderPosition(0)
+  function resetDurationSlider(){
+    setDurationSliderPosition(0)
   }
 
   // change volume
@@ -189,12 +186,12 @@ function App() {
     // update slider position & track's currentTime
     if(!isNaN(track.current.duration)){
       position = track.current.currentTime * (100 / track.current.duration)
-      currentTime = track.current.duration * (slider.current.value / 100)
+      currentTime = track.current.duration * (durationSlider.current.value / 100)
       
       setCurrentPlayingTime(track.current.currentTime)
-      setSliderPosition(position)
+      setDurationSliderPosition(position)
 
-      // change track's currentTime when slider changed
+      // change track's currentTime when duration slider changed
       track.current.currentTime = currentTime;
     }
   }
@@ -246,13 +243,13 @@ function App() {
         isPlaying={isPlaying}
         nextSong={nextSong}
         changeDuration={changeDuration}
-        slider={slider}
+        durationSlider={durationSlider}
         currentPlayingTime={currentPlayingTime}
         autoplaySwitch={autoplaySwitch}
         auto_play={auto_play}
         audioLoaded={audioLoaded}
         fullDuration={fullDuration}
-        sliderPosition={sliderPosition}
+        durationSliderPosition={durationSliderPosition}
         endSong={endSong}
         visualyzer={visualyzer}
       />
