@@ -39,7 +39,7 @@ export default function Mp3Player(props) {
                     <FontAwesomeIcon icon="fa-solid fa-volume-high" />
                 }
                 </span>
-                <input type="range" min="0" max="100" value={props.volume} onChange={props.volumeChange} id="volume" ref={props.recentVolume} />
+                <input type="range" min="0" max="100" value={props.volume} onChange={props.changeVolume} id="volume" ref={props.volumeSlider} />
             </div>
             </div>
 

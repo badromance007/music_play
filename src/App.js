@@ -12,6 +12,8 @@ function App() {
 
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
+
+
   const [currentDuration, setCurrentDuration] = useState(0)
   const [displayDuration, setDisplayDuration] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
@@ -20,7 +22,7 @@ function App() {
   const [sliderPosition, setSliderPosition] = useState(0)
 
   const play =  useRef()
-  const recentVolume= useRef()
+  const volumeSlider= useRef()
   const slider =  useRef()
   const auto_play =  useRef()
   const visualyzer = useRef()
@@ -98,9 +100,9 @@ function App() {
   }
 
   // change volume
-  function volumeChange() {
+  function changeVolume() {
     console.log('volume change')
-    setVolume(recentVolume.current.value)
+    setVolume(volumeSlider.current.value)
   }
 
   // Play or pause song
@@ -240,8 +242,8 @@ function App() {
         volume={volume}
         muteSound={muteSound}
         mute={mute}
-        volumeChange={volumeChange}
-        recentVolume={recentVolume}
+        changeVolume={changeVolume}
+        volumeSlider={volumeSlider}
         rangeSlider={rangeSlider}
         track={track}
         prevSong={prevSong}
