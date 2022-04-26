@@ -5,7 +5,8 @@ import Mp3Player from './components/Mp3Player';
 
 function App() {
   const [songs, setSongs] = useState(songsData)
-  const [playingSong, setPlayingSong] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
@@ -37,7 +38,7 @@ function App() {
     // load track & play song when index changed
     loadTrack()
     
-    if (playingSong) {
+    if (isPlaying) {
       playSong()
     }
 
@@ -103,9 +104,9 @@ function App() {
   // Play or pause song
   function justPlay() {
     console.log('just Play')
-    setPlayingSong(prevState => !prevState)
+    setIsPlaying(prevState => !prevState)
 
-    if(!playingSong) {
+    if(!isPlaying) {
       playSong()
     } else {
       pauseSong()
@@ -114,9 +115,6 @@ function App() {
 
   function playSong() {
     track.current.play();
-
-    trackImage.current.classList.add('blur-img')
-    visualyzer.current.classList.remove('hidden')
 
     if (!audioContext.current) {
       createVisualyzer();
@@ -165,8 +163,6 @@ function App() {
 
   function pauseSong() {
     track.current.pause();
-    trackImage.current.classList.remove('blur-img')
-    visualyzer.current.classList.add('hidden')
   }
 
   function prevSong() {
@@ -227,7 +223,8 @@ function App() {
   function endSong() {
     // will run when the song is over
     console.log('track ended')
-    // setPlayingSong(prevState => !prevState)
+    setIsPlaying(prevState => !prevState)
+    setDisplayDuration(0)
     setCurrentIndex(prevIndex => {
       return prevIndex < songs.length - 1 ? prevIndex + 1 : prevIndex
     })
@@ -248,7 +245,7 @@ function App() {
         prevSong={prevSong}
         justPlay={justPlay}
         play={play}
-        playingSong={playingSong}
+        isPlaying={isPlaying}
         nextSong={nextSong}
         currentDuration={currentDuration}
         changeDuration={changeDuration}

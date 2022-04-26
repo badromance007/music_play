@@ -17,9 +17,16 @@ export default function Mp3Player(props) {
             
             {/* song image */}
             <div className='image-track-container'>
-                <img ref={props.trackImage} src={props.songs[props.currentIndex].img}/>
+                <img
+                    ref={props.trackImage}
+                    src={props.songs[props.currentIndex].img}
+                    className={[props.isPlaying && 'blur-img']}
+                />
 
-                <Visualyzer visualyzer={props.visualyzer} />
+                <Visualyzer
+                    visualyzer={props.visualyzer}
+                    isPlaying={props.isPlaying}
+                />
             </div>
             <div className='volume'>
                 <p id='volume_show'>{ props.volume }</p>
@@ -66,7 +73,7 @@ export default function Mp3Player(props) {
                 <button onClick={props.justPlay} id="play" ref={props.play}>
                 <span>
                     {
-                    props.playingSong
+                    props.isPlaying
                     ?
                     <FontAwesomeIcon icon="fa-solid fa-pause" />
                     :

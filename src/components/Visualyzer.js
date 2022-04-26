@@ -3,7 +3,7 @@ export default function Visualyzer(props) {
         <div className="visualizer-box">
             <p>Visualyzer</p>
             <div className="visualizer-container">
-                <div className="visualizer" ref={props.visualyzer}>
+                <div className={`visualizer ${[!props.isPlaying && 'hidden']}`} ref={props.visualyzer}>
                     <div className="visualizer--innercircle">
                     </div>
                 </div>
