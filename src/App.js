@@ -20,13 +20,17 @@ function App() {
   const [currentPlayingTime, setCurrentPlayingTime] = useState(0)
   const [fullDuration, setFullDuration] = useState(0) 
   const [durationSliderPosition, setDurationSliderPosition] = useState(0)
-  const durationSlider =  useRef()
+  const durationSlider = useRef()
 
-  const auto_play =  useRef()
+  // auto play next song
+  const [isAutoPlayNextSong, setIsAutoPlayNextSong] = useState(false)
+
+
+  // audio track & visualiser
   const visualyzer = useRef()
   const track = useRef()
 
-  //  context
+  //  audio context & audio media source
   const audioContext = useRef()
   const audioSource = useRef()
 
@@ -187,7 +191,7 @@ function App() {
       position = track.current.currentTime * (100 / track.current.duration)
       currentTime = track.current.duration * (durationSlider.current.value / 100)
       
-      setCurrentPlayingTime(currentTime)
+      setCurrentPlayingTime(track.current.currentTime)
       setDurationSliderPosition(position)
 
       // change track's currentTime when duration slider changed
@@ -195,8 +199,8 @@ function App() {
     }
   }
 
-  function autoplaySwitch() {
-    console.log('AutoplaySwitch')
+  function autoplayNextSong() {
+    setIsAutoPlayNextSong(prevState => !prevState)
   }
 
   function muteSound() {
@@ -214,14 +218,20 @@ function App() {
     setFullDuration(track.current.duration)
   }
 
+  // will run when the song is over
   function endSong() {
-    // will run when the song is over
     console.log('track ended')
-    setIsPlaying(prevState => !prevState)
-    setCurrentPlayingTime(0)
-    setCurrentIndex(prevIndex => {
-      return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
-    })
+    
+    // go to next song if in auto play mode
+    if (isAutoPlayNextSong) {
+      setCurrentPlayingTime(0)
+      setCurrentIndex(prevIndex => {
+        return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
+      })
+    } else {
+      // stop song when ended if not in auto play mode
+      setIsPlaying(prevState => !prevState)
+    }
   }
 
   return (
@@ -243,13 +253,13 @@ function App() {
         changeDuration={changeDuration}
         durationSlider={durationSlider}
         currentPlayingTime={currentPlayingTime}
-        autoplaySwitch={autoplaySwitch}
-        auto_play={auto_play}
+        autoplayNextSong={autoplayNextSong}
         audioLoaded={audioLoaded}
         fullDuration={fullDuration}
         durationSliderPosition={durationSliderPosition}
         endSong={endSong}
         visualyzer={visualyzer}
+        isAutoPlayNextSong={isAutoPlayNextSong}
       />
     </main>
   );

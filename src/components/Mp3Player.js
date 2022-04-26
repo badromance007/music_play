@@ -66,23 +66,23 @@ export default function Mp3Player(props) {
                     onEnded={props.endSong}
                 />
                 <button onClick={props.prevSong} id="pre">
-                <span><FontAwesomeIcon icon="fa-solid fa-backward-step" /></span>
+                    <span><FontAwesomeIcon icon="fa-solid fa-backward-step" /></span>
                 </button>
 
                 <button onClick={props.justPlay} id="play">
-                <span>
-                    {
-                    props.isPlaying
-                    ?
-                    <FontAwesomeIcon icon="fa-solid fa-pause" />
-                    :
-                    <FontAwesomeIcon icon="fa-solid fa-play" />
-                    }
-                </span>
+                    <span>
+                        {
+                        props.isPlaying
+                        ?
+                        <FontAwesomeIcon icon="fa-solid fa-pause" />
+                        :
+                        <FontAwesomeIcon icon="fa-solid fa-play" />
+                        }
+                    </span>
                 </button>
 
                 <button onClick={props.nextSong} id="next">
-                <span><FontAwesomeIcon icon="fa-solid fa-forward-step" /></span>
+                    <span><FontAwesomeIcon icon="fa-solid fa-forward-step" /></span>
                 </button>
             </div>
 
@@ -92,7 +92,11 @@ export default function Mp3Player(props) {
                 <p>{ getDurationInMinutes(props.currentPlayingTime) } / {getDurationInMinutes(props.fullDuration)}</p>
             </div>
 
-            <button id='auto' onClick={props.autoplaySwitch} ref={props.auto_play}>Auto play <span><FontAwesomeIcon icon="fa-solid fa-circle-notch" /></span></button>
+            <button
+                id='auto'
+                onClick={props.autoplayNextSong}
+                className={`${props.isAutoPlayNextSong && `bg-orange`}`}
+            >Auto play <span><FontAwesomeIcon icon="fa-solid fa-circle-notch" /></span></button>
             </div>
         </div>
     )
