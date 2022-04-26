@@ -65,7 +65,10 @@ export default function Mp3Player(props) {
                         onLoadedData={props.audioLoaded}
                         onEnded={props.endSong}
                     />
-                    <button>
+                    <button
+                        onClick={props.shuffleSong}
+                        className={`${props.isShuffle && 'bg-orange'}`}
+                    >
                         <span><FontAwesomeIcon icon="fa-solid fa-shuffle" /></span>
                     </button>
 

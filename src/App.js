@@ -23,8 +23,9 @@ function App() {
   const [durationSliderPosition, setDurationSliderPosition] = useState(0)
   const durationSlider = useRef()
 
-  // repeat state
+  // repeat & shuffle state
   const [repeat, setRepeat] = useState(NO_REPEAT)
+  const [isShuffle, setIsShuffle] = useState(false)
 
   // audio track & visualiser
   const visualyzer = useRef()
@@ -251,8 +252,67 @@ function App() {
     })
   }
 
-  console.log('isplayingState = ', isPlaying)
+  // shuffle others but keep the current song position
+  function shuffleSong() {
+    setIsShuffle(prevState => !prevState)
+
+    if (!isShuffle) {
+      setSongs(oldSongs => {
+        let arrayA = oldSongs.slice(0, currentIndex)
+        let arrayB = oldSongs.slice(currentIndex + 1, oldSongs.length)
+        let result = oldSongs
+
+        if(!arrayA.length) {
+          let oldSong = oldSongs[currentIndex]
+          let shouldShuffleArray = oldSongs.slice(currentIndex + 1, oldSongs.length)
+          result = [
+            oldSong,
+            ...shuffle(shouldShuffleArray)
+          ]
+        } else if (arrayA.length === oldSongs.length - 1) {
+          let oldSong = oldSongs[currentIndex]
+          let shouldShuffleArray = oldSongs.slice(0, oldSongs.length - 1)
+          result = [
+            ...shuffle(shouldShuffleArray),
+            oldSong
+          ]
+        } else {
+          let oldSong = oldSongs[currentIndex]          
+          let firstArray = shuffle(arrayA)
+          let secondArray = shuffle(arrayB)
+          result = [
+            ...firstArray,
+            oldSong,
+            ...secondArray
+          ]
+        }
+
+        return result
+      })
+    }
+  }
+
+  function shuffle(array) { // Fisher-Yates Shuffle
+    let currentIndex = array.length,  randomIndex
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]]
+    }
+  
+    return array
+  }
     
+  const songElements = songs.map(song => (
+    <p key={song.id} className={song.id === songs[currentIndex].id ? 'bg-orange' : ''}>{song.name} - {song.singer}</p>
+  ))
 
   return (
     <main>
@@ -280,7 +340,14 @@ function App() {
         visualyzer={visualyzer}
         handleRepeat={handleRepeat}
         repeat={repeat}
+        shuffleSong={shuffleSong}
+        isShuffle={isShuffle}
       />
+
+      <div>
+         <h1>Playlist</h1>
+         {songElements}
+      </div>
     </main>
   );
 }
