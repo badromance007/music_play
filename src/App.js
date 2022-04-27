@@ -14,6 +14,9 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
+  // Custom playlist (CRUD songs)
+  const [myPlaylist, setMyPlayList] = useState([])
+
   // volume states & volume slider and mute state
   const [volume, setVolume] = useState(100)
   const prevVolume = useRef(0) // store previous volume
@@ -305,6 +308,13 @@ function App() {
       setIsMp3PlayerHidden(prevState => !prevState)
     }
   }
+  
+  // always show mp3 player when on large device
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setIsMp3PlayerHidden(false)
+    }
+  }, [window.innerWidth])
 
   return (
     <main>

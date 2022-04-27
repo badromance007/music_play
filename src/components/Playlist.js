@@ -12,7 +12,10 @@ export default function Playlist({ songs, currentIndex, playThisSong }) {
 
     return (
         <div className="playlist">
-            <h1>Playlist</h1>
+            <div className="playlist--header">
+                <button>Create your own playlist</button>
+                <h1>Default Playlist</h1>
+            </div>
             {songElements}
         </div>
     )
