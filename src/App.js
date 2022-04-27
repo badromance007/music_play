@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { songsData } from './seeds/songsData';
 import Mp3Player from './components/Mp3Player';
 import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
+import { shuffle } from './helpers/functions';
 
 function App() {
 
@@ -288,24 +289,6 @@ function App() {
         setSongs(originalPlayList.current)
       }
     }
-  }
-
-  function shuffle(array) { // Fisher-Yates Shuffle
-    let currentIndex = array.length,  randomIndex
-  
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
-  
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]]
-    }
-  
-    return array
   }
     
   const songElements = songs.map(song => (
