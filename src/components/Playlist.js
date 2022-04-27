@@ -1,6 +1,6 @@
 import Song from "./Song"
 
-export default function Playlist({ songs, currentIndex, playThisSong }) {
+export default function Playlist({ songs, currentIndex, playThisSong, openModal }) {
     const songElements = songs.map((song, songIndex) => (
         <Song
             key={song.id}
@@ -13,7 +13,7 @@ export default function Playlist({ songs, currentIndex, playThisSong }) {
     return (
         <div className="playlist">
             <div className="playlist--header">
-                <button>Create your own playlist</button>
+                <button onClick={openModal}>Create your own playlist</button>
                 <h1>Default Playlist</h1>
             </div>
             {songElements}

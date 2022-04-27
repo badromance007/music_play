@@ -5,7 +5,7 @@ import { REPEAT_PLAYLIST, REPEAT_ONE } from '../helpers/constants';
 
 export default function Mp3Player(props) {
     return (
-        <div className={`player ${props.isMp3PlayerHidden && 'hidden'}`}>
+        <div className={`player ${props.isMp3PlayerHidden ? 'hidden' : ''}`}>
             <p id="logo" onClick={props.toggleShowingMp3Player}>
                 <span>
                     <FontAwesomeIcon icon="fa-solid fa-music" />

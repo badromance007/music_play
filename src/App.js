@@ -5,6 +5,7 @@ import Mp3Player from './components/Mp3Player';
 import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
 import { shuffle } from './helpers/functions';
 import Playlist from './components/Playlist';
+import ninjaCat from './images/ninja_cat_cool.png';
 
 function App() {
 
@@ -316,12 +317,39 @@ function App() {
     }
   }, [window.innerWidth])
 
+
+  // create open & close modal
+  // new bug:
+  /*
+    step1: on small screen
+    step2: close mp3 player
+
+    step3: open modal
+    step4: close modal
+    step5: return to large screen
+
+    step6: mp3 still hidden
+  */
+  function openModal() {
+    console.log('open modal')
+    document.querySelector('#modal-container').removeAttribute('class')
+    document.querySelector('#modal-container').classList.add('five')
+    document.querySelector('body').classList.add('modal-active')
+  }
+
+  function closeModal(event) {
+    console.log('close modal')
+    document.querySelector('#modal-container').classList.add('out')
+    document.querySelector('body').classList.remove('modal-active');
+  }
+
   return (
     <main>
       <Playlist
         songs={songs}
         currentIndex={currentIndex}
         playThisSong={playThisSong}
+        openModal={openModal}
       />
       <br />
       <Mp3Player 
@@ -353,6 +381,18 @@ function App() {
         isMp3PlayerHidden={isMp3PlayerHidden}
         toggleShowingMp3Player={toggleShowingMp3Player}
       />
+
+
+      <div id="modal-container">
+        <div className="modal-background">
+          <div className="modal">
+            <span onClick={closeModal}>Close button</span>
+            <h2>I'm a Modal</h2>
+            <p>Hear me roar.</p>
+            <img src={ninjaCat} width="100" />
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
