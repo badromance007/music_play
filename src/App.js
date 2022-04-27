@@ -8,6 +8,7 @@ function App() {
 
   // playlist states
   const [songs, setSongs] = useState(songsData)
+  const originalPlayList = useRef(songsData) // use to restore previous songs position when stop shuffling
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -258,6 +259,9 @@ function App() {
 
     if (!isShuffle) {
       setSongs(oldSongs => {
+        // store current songs position before shuffling
+        originalPlayList.current = oldSongs
+
         let arrayA = oldSongs.slice(0, currentIndex)
         let arrayB = oldSongs.slice(currentIndex + 1, oldSongs.length)
         let result = oldSongs
@@ -289,6 +293,11 @@ function App() {
 
         return result
       })
+    } else {
+      // only restore previous playlist if current song position same on both shuffled list and old list
+      if (originalPlayList.current[currentIndex].id === songs[currentIndex].id) {
+        setSongs(originalPlayList.current)
+      }
     }
   }
 
