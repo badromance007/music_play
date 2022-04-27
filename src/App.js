@@ -262,40 +262,40 @@ function App() {
         // store current songs position before shuffling
         originalPlayList.current = oldSongs
 
-        let arrayA = oldSongs.slice(0, currentIndex)
-        let arrayB = oldSongs.slice(currentIndex + 1, oldSongs.length)
-        let result = oldSongs
+        const cutSongsLeft = oldSongs.slice(0, currentIndex)
+        const cutSongsRight = oldSongs.slice(currentIndex + 1, oldSongs.length)
+        let shuffledResult = oldSongs // store shuffled result
 
-        if(!arrayA.length) {
+        if(!cutSongsLeft.length) { // current song at begining
           let oldSong = oldSongs[currentIndex]
-          let shouldShuffleArray = oldSongs.slice(currentIndex + 1, oldSongs.length)
-          result = [
+          let remainingSongs = oldSongs.slice(currentIndex + 1, oldSongs.length)
+          shuffledResult = [
             oldSong,
-            ...shuffle(shouldShuffleArray)
+            ...shuffle(remainingSongs)
           ]
-        } else if (arrayA.length === oldSongs.length - 1) {
+        } else if (cutSongsLeft.length === oldSongs.length - 1) { // current song at the end
           let oldSong = oldSongs[currentIndex]
-          let shouldShuffleArray = oldSongs.slice(0, oldSongs.length - 1)
-          result = [
-            ...shuffle(shouldShuffleArray),
+          let remainingSongs = oldSongs.slice(0, oldSongs.length - 1)
+          shuffledResult = [
+            ...shuffle(remainingSongs),
             oldSong
           ]
-        } else {
+        } else { // current song in the middle
           let oldSong = oldSongs[currentIndex]          
-          let newJoinArray = [...arrayA, ...arrayB]
-          let newShuffledArray = shuffle(newJoinArray)
+          let newJoinedRemainingSongs = [...cutSongsLeft, ...cutSongsRight]
+          let newShuffledRemainingSongs = shuffle(newJoinedRemainingSongs)
 
-          let firstArray = newShuffledArray.slice(0, arrayA.length)
-          let secondArray = newShuffledArray.slice(arrayA.length, newShuffledArray.length)
+          let firstPartSongs = newShuffledRemainingSongs.slice(0, cutSongsLeft.length)
+          let secondPartSongs = newShuffledRemainingSongs.slice(cutSongsLeft.length, newShuffledRemainingSongs.length)
 
-          result = [
-            ...firstArray,
+          shuffledResult = [
+            ...firstPartSongs,
             oldSong,
-            ...secondArray
+            ...secondPartSongs
           ]
         }
 
-        return result
+        return shuffledResult
       })
     } else {
       // only restore previous playlist if current song position same on both shuffled list and old list
