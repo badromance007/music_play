@@ -1,18 +1,26 @@
 main    {
-	height: 100vh;
 	width: 100%;
-	display: grid;
-	grid-template-columns: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+
+	background: linear-gradient(to right, #fff, #5e6b77);
+	/* background: linear-gradient(to right, #5c9ee6, #468fd3); */
 }
 
 .player {
-	position: relative;
-	height: 80%;
-	width: 80%;
+	position: -webkit-sticky;
+	position: sticky;
+	bottom: 0;
+	/* position: relative; */
+	height: 400px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background: linear-gradient(to right, #5D6D7E, #566573);
+	box-shadow: 1px 0px 10px 6px rgba(240,240,240,0.2);
 }
 
 .player #logo {
@@ -40,8 +48,8 @@ main    {
 
 /* song image */
 .left .image-track-container {
-	height: 300px;
-	width: 80%;
+	height: 250px;
+	width: 250px;
 	border-radius: 15px;
 	box-shadow: 1px 0px 20px 12px rgba(240,240,240,0.2);
 }
@@ -87,7 +95,7 @@ input[type="range"]::-moz-range-thumb {
 /* volume part */
 .left .volume {
     position: absolute;
-	bottom: 10%;
+	bottom: 7%;
 	left: 0;
 	width: 100%;
 	height: 30px;
@@ -151,7 +159,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .right .duration {
 	position: absolute;
-	bottom: 20%;
+	bottom: 10%;
 	left: 50%;
 	transform: translateX(-50%);
 	display: flex;
@@ -277,7 +285,14 @@ input[type="range"]::-moz-range-thumb {
 
 .bg-orange {
 	background-color: #FF8A65 !important;
-	position: relative;
+	color: #fff;
+}
+.bg-blue {
+	background: linear-gradient(to right, #5D6D7E, rgb(157, 171, 247)) !important;
+	color: #fff;
+}
+.bg-blue span {
+	color: #fff;
 }
 
 .repeat-one {
@@ -290,4 +305,52 @@ input[type="range"]::-moz-range-thumb {
 
 .duration--display {
 	color: #fff;
+}
+
+/* playlist */
+.playlist {
+	width: 800px;
+	padding: 20px;
+}
+.playlist > h1 {
+	text-align: center;
+	margin-bottom: 20px;
+	text-shadow: 2px 2px 8px #fff;
+}
+.playlist--song {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	border-radius: 5px;
+	padding: 10px;
+}
+.playlist--song:hover {
+	color: #fff;
+	background-color: rgba(0,0,0,0.2);
+}
+.playlist--song:hover span {
+	color: #fff;
+}
+.playlist--song_info {
+	display: grid;
+	grid-template-columns: 40px auto;
+	column-gap: 10px;
+}
+.playlist--song_img {
+	width: 40px;
+	grid-row-start: 1;
+    grid-row-end: 3;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.playlist--song_title {
+	font-weight: 600;
+}
+.playlist--song_singer {
+	font-size: 0.8rem;
+	color: rgb(83, 83, 83);
+}
+.playlist--song_album {
+	display: flex;
+	align-items: center;
+	color: rgb(83, 83, 83);
 }

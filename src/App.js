@@ -4,6 +4,7 @@ import { songsData } from './seeds/songsData';
 import Mp3Player from './components/Mp3Player';
 import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
 import { shuffle } from './helpers/functions';
+import Playlist from './components/Playlist';
 
 function App() {
 
@@ -285,13 +286,21 @@ function App() {
       }
     }
   }
-    
-  const songElements = songs.map(song => (
-    <p key={song.id} className={song.id === songs[currentIndex].id ? 'bg-orange' : ''}>{song.name} - {song.singer}</p>
-  ))
+
+  function playThisSong(songIndex) {
+    setIsPlaying(true)
+    setCurrentIndex(songIndex)
+    playSong()
+  }
 
   return (
     <main>
+      <Playlist
+        songs={songs}
+        currentIndex={currentIndex}
+        playThisSong={playThisSong}
+      />
+      <br />
       <Mp3Player 
         songs={songs}
         currentIndex={currentIndex}
@@ -319,11 +328,6 @@ function App() {
         shuffleSong={shuffleSong}
         isShuffle={isShuffle}
       />
-
-      <div>
-         <h1>Playlist</h1>
-         {songElements}
-      </div>
     </main>
   );
 }
