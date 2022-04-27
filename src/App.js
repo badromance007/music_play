@@ -70,7 +70,6 @@ function App() {
   }, [mute])
 
   function loadTrack() {
-    console.log('load track')
     resetDurationSlider()
 
     track.current.src = songs[currentIndex].path;
@@ -100,7 +99,6 @@ function App() {
 
   // Play or pause song
   function justPlay() {
-    console.log('just Play')
     setIsPlaying(prevState => !prevState)
 
     if(!isPlaying) {
@@ -163,8 +161,6 @@ function App() {
   }
 
   function prevSong() {
-    console.log('prevSong', currentIndex)
-
     setCurrentIndex(prevIndex => (
       prevIndex > 0 ?
       prevIndex - 1 :
@@ -173,8 +169,6 @@ function App() {
   }
 
   function nextSong() {
-    console.log('nextSong')
-
     setCurrentIndex(prevIndex => (
       prevIndex < songs.length - 1 ?
       prevIndex + 1 :
@@ -183,8 +177,6 @@ function App() {
   }
 
   function changeDuration() {
-    console.log('changeDuration')
-
     let position = 0
     let currentTime = 0
           
@@ -211,15 +203,11 @@ function App() {
   }
 
   function audioLoaded() {
-    console.log('audio Loaded')
-
     setFullDuration(track.current.duration)
   }
 
   // will run when the song is over
   function endSong() {
-    console.log('track ended')
-    
     // replay playlist from song 1 if in REPEAT PLAYLIST mode
     if (repeat === REPEAT_PLAYLIST && currentIndex === songs.length - 1) {
       setCurrentPlayingTime(0)
@@ -236,7 +224,6 @@ function App() {
         setCurrentIndex(prevIndex => {
           return (prevIndex < songs.length - 1) ? prevIndex + 1 : prevIndex
         })
-        console.log('isplayingState = ', isPlaying)
       }
     }
   }
