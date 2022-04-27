@@ -262,26 +262,24 @@ function App() {
         // store current songs position before shuffling
         originalPlayList.current = oldSongs
 
+        const oldSong = oldSongs[currentIndex]
         const cutSongsLeft = oldSongs.slice(0, currentIndex)
         const cutSongsRight = oldSongs.slice(currentIndex + 1, oldSongs.length)
         let shuffledResult = oldSongs // store shuffled result
 
         if(!cutSongsLeft.length) { // current song at begining
-          let oldSong = oldSongs[currentIndex]
           let remainingSongs = oldSongs.slice(currentIndex + 1, oldSongs.length)
           shuffledResult = [
             oldSong,
             ...shuffle(remainingSongs)
           ]
         } else if (cutSongsLeft.length === oldSongs.length - 1) { // current song at the end
-          let oldSong = oldSongs[currentIndex]
           let remainingSongs = oldSongs.slice(0, oldSongs.length - 1)
           shuffledResult = [
             ...shuffle(remainingSongs),
             oldSong
           ]
         } else { // current song in the middle
-          let oldSong = oldSongs[currentIndex]          
           let newJoinedRemainingSongs = [...cutSongsLeft, ...cutSongsRight]
           let newShuffledRemainingSongs = shuffle(newJoinedRemainingSongs)
 
