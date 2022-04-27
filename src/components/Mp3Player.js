@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getDurationInMinutes } from '../helpers/functions'
 import Visualyzer from './Visualyzer'
-import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from '../helpers/constants';
+import { REPEAT_PLAYLIST, REPEAT_ONE } from '../helpers/constants';
 
 export default function Mp3Player(props) {
     return (
-        <div className='player'>
-            <p id="logo">
+        <div className={`player ${props.isMp3PlayerHidden && 'hidden'}`}>
+            <p id="logo" onClick={props.toggleShowingMp3Player}>
                 <span>
                     <FontAwesomeIcon icon="fa-solid fa-music" />
                 </span>
@@ -44,14 +44,14 @@ export default function Mp3Player(props) {
 
             {/* right part */}
             <div className='right'>
-                <div className='show_song_no'>
+                <div className='show_song_no' onClick={props.toggleShowingMp3Player}>
                     <span id='present'>{props.currentIndex + 1}</span>
                     <span>/</span>
                     <span id='total'>{ props.songs.length }</span>
                 </div>
 
                 {/* song title & artist name */}
-                <div className='song-info'>
+                <div className='song-info' onClick={props.toggleShowingMp3Player}>
                     <p id='title'>{ props.songs[props.currentIndex].name }</p>
                     <p id='artist'>{ props.songs[props.currentIndex].singer }</p>
                 </div>

@@ -279,7 +279,7 @@ input[type="range"]::-moz-range-thumb {
 /* end visualyzer box */
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .bg-orange {
@@ -402,6 +402,13 @@ input[type="range"]::-moz-range-thumb {
 		position: absolute;
 		top: -97%;
 		right: -9%;
+	}
+	.right #title {
+		font-size: 30px;
+		margin-bottom: 10px;
+	}
+	.right #artist {
+		font-size: 15px;
 	}
 
 	/* visualiser */

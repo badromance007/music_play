@@ -38,6 +38,9 @@ function App() {
   const audioContext = useRef()
   const audioSource = useRef()
 
+  // control mp3Player on mobile
+  const [isMp3PlayerHidden, setIsMp3PlayerHidden] = useState(false)
+
   useEffect(() => {
     // load track & play song when index changed
     loadTrack()
@@ -291,6 +294,16 @@ function App() {
     setIsPlaying(true)
     setCurrentIndex(songIndex)
     playSong()
+
+    // turn on mp3player on mobile
+    toggleShowingMp3Player()
+  }
+
+  // toggle show mp3 player when on mobile device
+  function toggleShowingMp3Player() {
+    if (window.innerWidth <= 768) {
+      setIsMp3PlayerHidden(prevState => !prevState)
+    }
   }
 
   return (
@@ -327,6 +340,8 @@ function App() {
         repeat={repeat}
         shuffleSong={shuffleSong}
         isShuffle={isShuffle}
+        isMp3PlayerHidden={isMp3PlayerHidden}
+        toggleShowingMp3Player={toggleShowingMp3Player}
       />
     </main>
   );
