@@ -282,8 +282,12 @@ function App() {
           ]
         } else {
           let oldSong = oldSongs[currentIndex]          
-          let firstArray = shuffle(arrayA)
-          let secondArray = shuffle(arrayB)
+          let newJoinArray = [...arrayA, ...arrayB]
+          let newShuffledArray = shuffle(newJoinArray)
+
+          let firstArray = newShuffledArray.slice(0, arrayA.length)
+          let secondArray = newShuffledArray.slice(arrayA.length, newShuffledArray.length)
+
           result = [
             ...firstArray,
             oldSong,
