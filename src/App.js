@@ -37,11 +37,6 @@ function App() {
   const audioContext = useRef()
   const audioSource = useRef()
 
-  useEffect(() => { 
-    // load track
-    loadTrack()
-  }, [])
-
   useEffect(() => {
     // load track & play song when index changed
     loadTrack()
