@@ -67,7 +67,7 @@ export default function Mp3Player(props) {
                     />
                     <button
                         onClick={props.shuffleSong}
-                        className={`${props.isShuffle && 'bg-orange'}`}
+                        className={props.isShuffle ? 'bg-orange' : 'bg-transparent'}
                     >
                         <span><FontAwesomeIcon icon="fa-solid fa-shuffle" /></span>
                     </button>
@@ -94,7 +94,7 @@ export default function Mp3Player(props) {
 
                     <button
                         onClick={props.handleRepeat}
-                        className={`${(props.repeat === REPEAT_PLAYLIST || props.repeat === REPEAT_ONE) && 'bg-orange'}`}
+                        className={`repeat--button ${(props.repeat === REPEAT_PLAYLIST || props.repeat === REPEAT_ONE) ? 'bg-orange' : 'bg-transparent'}`}
                     >
                         <span>
                             {props.repeat === REPEAT_ONE && <span className='repeat-one'>1</span>}

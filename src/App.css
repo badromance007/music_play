@@ -113,9 +113,7 @@ input[type="range"]::-moz-range-thumb {
 	padding: 8px 12px;
 	background: #FF8A65;
 }
-.left .volume span:hover {
-	background: rgba(245,245,245,0.1);
-}
+
 .volume #volume--show {
 	padding: 8px 12px;
 	margin: 0 5px 0 0;
@@ -183,9 +181,7 @@ input[type="range"]::-moz-range-thumb {
 	width: 50px;
 	font-size: 1.5rem;
 }
-.right button:hover {
-	background: #FF8A65;
-}
+
 .right span::before {
 	color: #fff;
 	font-size: 20px;
@@ -286,6 +282,10 @@ input[type="range"]::-moz-range-thumb {
 	background-color: #FF8A65 !important;
 	color: #fff;
 }
+.bg-transparent {
+	background-color: rgba(255,255,255,0.1) !important;
+	color: #fff;
+}
 .bg-blue {
 	background: linear-gradient(to right, #5D6D7E, rgb(157, 171, 247)) !important;
 	color: #fff;
@@ -293,7 +293,9 @@ input[type="range"]::-moz-range-thumb {
 .bg-blue span {
 	color: #fff;
 }
-
+.repeat--button {
+	position: relative;
+}
 .repeat-one {
 	position: absolute;
 	top: 5px;
@@ -355,6 +357,15 @@ input[type="range"]::-moz-range-thumb {
 	color: rgb(83, 83, 83);
 }
 
+@media only screen and (min-width: 769px) {
+	.right button:hover {
+		background: #FF8A65;
+	}
+	.left .volume span:hover {
+		background: rgba(245,245,245,0.1);
+	}
+}
+
 /* Mobile display */
 @media only screen and (max-width: 768px) {
 	.playlist {
@@ -409,6 +420,9 @@ input[type="range"]::-moz-range-thumb {
 	}
 	.right #artist {
 		font-size: 15px;
+	}
+	.right button:active {
+		background: #FF8A65;
 	}
 
 	/* visualiser */
