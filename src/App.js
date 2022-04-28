@@ -337,7 +337,6 @@ function App() {
     setIsPlaylistModalShow(true)
   }
   function openCreatePlaylistModal() {
-    console.log('openCreatePlaylistModal')
     setIsCreatePlaylistModalShow(true)
   }
 
@@ -386,6 +385,36 @@ function App() {
       document.querySelector('body').classList.add('modal-active')
     }
   }, [isPlaylistModalShow, isCreatePlaylistModalShow])
+
+  function addSongToPlaylist(song, playlist) {
+    console.log('addSongToPlaylist => ')
+    console.log('song => ', song)
+    console.log('playlist => ', playlist)
+
+    playlist.songs.push(song)
+    setAllPlaylists(prevPlaylists => prevPlaylists.map(oldPlaylist => (
+      oldPlaylist.id === playlist.id ?
+      {
+        ...oldPlaylist,
+        songs: playlist.songs
+      } :
+      oldPlaylist
+    )))
+  }
+
+  const currentPlaylist = findCurrentPlaylist(currentPlaylistId)
+ 
+  const remainingSongs = songsData.filter(oldSong => currentPlaylist.songs.every(song => oldSong.id !== song.id))
+  const remainingSongsElements = remainingSongs.map(song => {
+        return <div
+            key={song.id}
+            className={`modal--body_playlist`}
+        >   
+            <span onClick={() => addSongToPlaylist(song, currentPlaylist)}>
+                {truncateString((`${song.name} - ${song.singer}`), 80)}
+            </span>
+        </div>
+  })
 
   return (
     <main>
@@ -455,7 +484,7 @@ function App() {
           title={`Add songs to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
           closeModal={closeModal}
         >
-          <h1>Create Playlist Now!!</h1>
+          {remainingSongsElements}
         </Modal>
       }
     </main>
