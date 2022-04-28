@@ -19,6 +19,9 @@ export default function Modal({allPlaylists, switchPlaylist, closeModal, current
                 <div className="modal">
                     <div className='modal--wrapper'>
                         <div className='modal--header'>
+                            <div>
+                                <h3>Choose a playlist to play</h3>
+                            </div>
                             <span
                                 className='modal--header_close'
                                 onClick={closeModal}

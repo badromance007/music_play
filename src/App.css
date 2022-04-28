@@ -532,11 +532,20 @@ html.modal-active, body.modal-active {
 	grid-template-rows: 5% 80% 15%;
 }
 .modal--header {
-	text-align: right;
+	display: flex;
+    justify-content: space-between;
+	align-items: center;
+}
+.modal--header div {
+	width: 100%;
+}
+.modal--header h3 {
 	color: #FF8A65;
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 .modal--header .modal--header_close {
 	cursor: pointer;
+	color: #FF8A65;
 }
 .modal--body {
 	display: flex;
@@ -558,6 +567,8 @@ html.modal-active, body.modal-active {
 }
 .modal--body_playlist span {
 	cursor: pointer;
+	font-size: 0.9rem;
+	color: #444444;
 }
 
 .modal--footer {
