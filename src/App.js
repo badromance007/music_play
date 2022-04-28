@@ -370,21 +370,6 @@ function App() {
     setCurrentPlaylistId(playListId)
   }
 
-  /*
-    New bugs:
-    1. play() promise:
-      - step1: choose a playlist and play
-      - step2: change playlist and see console
-      => App.js:83 Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
-      => https://developer.chrome.com/blog/play-request-was-interrupted/
-
-    2. Change different album with same song, song still playing:
-      - step1: choose a playlist and play
-      - step2: change playlist with same song
-      => song still playing
-
-  */
-
   return (
     <main>
       <Playlist
