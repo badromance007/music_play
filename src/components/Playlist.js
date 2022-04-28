@@ -12,6 +12,8 @@ export default function Playlist({ songs, currentIndex, playThisSong, openModal,
         />
     ))
 
+    const playList = currentPlaylist()
+
     return (
         <div className="playlist">
             <div className="playlist--header">
@@ -22,7 +24,7 @@ export default function Playlist({ songs, currentIndex, playThisSong, openModal,
                     </button>
                 </div>
                 <div>
-                    <h1>{truncateString(currentPlaylist.name, 16)}</h1>
+                    <h1>{truncateString(playList.name, 16)}</h1>
                 </div>
                 <div>
                     <button onClick={openModal}>

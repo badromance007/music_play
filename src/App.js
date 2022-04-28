@@ -58,7 +58,7 @@ function App() {
     }
 
     // update title
-    document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer
+    document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer + ' | ' + findCurrentPlaylist(currentPlaylistId).name
   }, [currentIndex, currentSongId, currentPlaylistId])
 
   // update track's volume when volume changed
@@ -345,28 +345,30 @@ function App() {
     document.querySelector('body').classList.remove('modal-active');
   }
 
-  function findCurrentPlaylist() {
+  function findCurrentPlaylist(playListId) {
     return allPlaylists.find(playlist => (
-      playlist.id === currentPlaylistId
+      playlist.id === playListId
     )) || allPlaylists[0]
   }
 
   // update list of songs and reset all song's states when playlist changed
-  useEffect(() => {
-    let newSongs = findCurrentPlaylist().songs
-    setSongs(newSongs)
+  function switchPlaylist(playListId) {
+    // update songs
+    const currentPlaylist = findCurrentPlaylist(playListId)
+    setSongs(currentPlaylist.songs)
 
     // reset all song states
-    originalPlayList.current = newSongs
+    originalPlayList.current = currentPlaylist.songs
     setIsShuffle(false)
     setIsPlaying(false)
     setCurrentIndex(0)
-    setCurrentSongId(newSongs[0].id)
+    setCurrentSongId(currentPlaylist.songs[0].id)
     setCurrentPlayingTime(0)
     setDurationSliderPosition(0)
-  }, [currentPlaylistId])
 
-  console.log('current isPlayingState: ', isPlaying)
+    // update current playlist id
+    setCurrentPlaylistId(playListId)
+  }
 
   /*
     New bugs:
@@ -390,7 +392,7 @@ function App() {
         currentIndex={currentIndex}
         playThisSong={playThisSong}
         openModal={openModal}
-        currentPlaylist={findCurrentPlaylist()}
+        currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
       />
       <br />
       <Mp3Player 
@@ -425,7 +427,7 @@ function App() {
 
       <Modal
         allPlaylists={allPlaylists}
-        setCurrentPlaylistId={setCurrentPlaylistId}
+        switchPlaylist={switchPlaylist}
         closeModal={closeModal}
         currentPlaylistId={currentPlaylistId}
       />
