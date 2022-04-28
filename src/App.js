@@ -312,24 +312,19 @@ function App() {
   
   // always show mp3 player when on large device
   useEffect(() => {
-    if (window.innerWidth > 768) {
-      setIsMp3PlayerHidden(false)
+    function watchScreenWidthChanging() {
+      if (window.innerWidth > 768) {
+        setIsMp3PlayerHidden(false)
+      }
     }
-  }, [window.innerWidth])
 
+    window.addEventListener('resize', watchScreenWidthChanging)
 
-  // create open & close modal
-  // new bug:
-  /*
-    step1: on small screen
-    step2: close mp3 player
+    return function() { // cleanup function, will run when App component is unmounted
+      window.removeEventListener('resize', watchScreenWidthChanging)
+    }
+  }, [])
 
-    step3: open modal
-    step4: close modal
-    step5: return to large screen
-
-    step6: mp3 still hidden
-  */
   function openModal() {
     console.log('open modal')
     document.querySelector('#modal-container').removeAttribute('class')
