@@ -50,7 +50,7 @@ function App() {
   const [isMp3PlayerHidden, setIsMp3PlayerHidden] = useState(false)
 
   useEffect(() => {
-    // load track & play song when song index changed or currentSongId changed
+    // load track & play song when song index changed or currentSongId changed or currentplaylistId changed
     loadTrack()
     
     if (isPlaying) {
@@ -59,7 +59,7 @@ function App() {
 
     // update title
     document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer
-  }, [currentIndex, currentSongId])
+  }, [currentIndex, currentSongId, currentPlaylistId])
 
   // update track's volume when volume changed
   useEffect(() => {
@@ -366,6 +366,23 @@ function App() {
     setDurationSliderPosition(0)
   }, [currentPlaylistId])
 
+  console.log('current isPlayingState: ', isPlaying)
+
+  /*
+    New bugs:
+    1. play() promise:
+      - step1: choose a playlist and play
+      - step2: change playlist and see console
+      => App.js:83 Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
+      => https://developer.chrome.com/blog/play-request-was-interrupted/
+
+    2. Change different album with same song, song still playing:
+      - step1: choose a playlist and play
+      - step2: change playlist with same song
+      => song still playing
+
+  */
+
   return (
     <main>
       <Playlist
@@ -410,6 +427,7 @@ function App() {
         allPlaylists={allPlaylists}
         setCurrentPlaylistId={setCurrentPlaylistId}
         closeModal={closeModal}
+        currentPlaylistId={currentPlaylistId}
       />
     </main>
   );

@@ -1,12 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ninjaCat from '../images/ninja_cat_cool.png';
+import { truncateString } from '../helpers/functions';
 
-export default function Modal({allPlaylists, setCurrentPlaylistId, closeModal}) {
+export default function Modal({allPlaylists, setCurrentPlaylistId, closeModal, currentPlaylistId}) {
     const playListNameElements =  allPlaylists.map(playlist => {
-                                    return <p
+                                    return <div
                                         key={playlist.id}
-                                        onClick={() => setCurrentPlaylistId(playlist.id)}
-                                    >{playlist.name}</p>
+                                        className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-orange' : ''}`}
+                                    >   
+                                        <span onClick={() => setCurrentPlaylistId(playlist.id)}>
+                                            {truncateString(playlist.name, 80)}
+                                        </span>
+                                    </div>
                                 })
     return (
         <div id="modal-container">

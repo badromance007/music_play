@@ -4,12 +4,12 @@ import { nanoid } from 'nanoid';
 export const playListData = [
     {
         id: nanoid(),
-        name: 'Default Playlist',
+        name: 'Default Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist',
         songs: songsData
     },
     {
         id: nanoid(),
-        name: 'Playlist 1',
+        name: 'This is my favorite playlist of all time This is my favorite playlist of all time',
         songs: [
             {
                 id: 10,
@@ -62,6 +62,104 @@ export const playListData = [
     {
         id: nanoid(),
         name: 'Playlist 3',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 4',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 6',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 7',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 8',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 9',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 10',
+        songs: [
+            {
+                id: 8,
+                name: 'Say Yes',
+                path: 'music/say_yes.mp3',
+                img: 'images/say_yes.jpg',
+                singer: 'Punch,Moon Byul (MAMAMOO)',
+                album: 'Moonlovers: Scarlet Heart Ryeo OST'
+            }
+        ]
+    },
+    {
+        id: nanoid(),
+        name: 'Playlist 11',
         songs: [
             {
                 id: 8,

@@ -539,7 +539,27 @@ html.modal-active, body.modal-active {
 	cursor: pointer;
 }
 .modal--body {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	overflow-y: scroll;
+	padding: 130px 0 20px 0;
 }
+.modal--body_playlist {
+	height: 50px;
+	width: 100%;
+	padding: 10px;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.modal--body_playlist span {
+	cursor: pointer;
+}
+
 .modal--footer {
 }
 

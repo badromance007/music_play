@@ -1,5 +1,6 @@
 import Song from "./Song"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { truncateString } from '../helpers/functions';
 
 export default function Playlist({ songs, currentIndex, playThisSong, openModal, currentPlaylist }) {
     const songElements = songs.map((song, songIndex) => (
@@ -21,7 +22,7 @@ export default function Playlist({ songs, currentIndex, playThisSong, openModal,
                     </button>
                 </div>
                 <div>
-                    <h1>{currentPlaylist.name}</h1>
+                    <h1>{truncateString(currentPlaylist.name, 16)}</h1>
                 </div>
                 <div>
                     <button onClick={openModal}>
