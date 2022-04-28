@@ -8,6 +8,7 @@ import { shuffle } from './helpers/functions';
 import Playlist from './components/Playlist';
 import { nanoid } from 'nanoid';
 import Modal from './components/Modal';
+import { truncateString } from './helpers/functions';
 
 function App() {
 
@@ -332,8 +333,12 @@ function App() {
     }
   }, [])
 
-  function openModal() {
+  function openPlaylistModal() {
     setIsPlaylistModalShow(true)
+  }
+  function openCreatePlaylistModal() {
+    console.log('openCreatePlaylistModal')
+    setIsCreatePlaylistModalShow(true)
   }
 
   function closeModal(event) {
@@ -341,7 +346,8 @@ function App() {
     document.querySelector('body').classList.remove('modal-active');
     setTimeout(() => {
       setIsPlaylistModalShow(false)
-    }, 700)
+      setIsCreatePlaylistModalShow(false)
+    }, 500)
   }
 
   function findCurrentPlaylist(playListId) {
@@ -372,13 +378,14 @@ function App() {
   }
 
   const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
+  const [isCreatePlaylistModalShow, setIsCreatePlaylistModalShow] = useState(false)
   useEffect(() => {
-    if (isPlaylistModalShow) {
+    if (isPlaylistModalShow || isCreatePlaylistModalShow) {
       document.querySelector('#modal-container').removeAttribute('class')
       document.querySelector('#modal-container').classList.add('fast')
       document.querySelector('body').classList.add('modal-active')
     }
-  }, [isPlaylistModalShow])
+  }, [isPlaylistModalShow, isCreatePlaylistModalShow])
 
   return (
     <main>
@@ -386,7 +393,8 @@ function App() {
         songs={songs}
         currentIndex={currentIndex}
         playThisSong={playThisSong}
-        openModal={openModal}
+        openPlaylistModal={openPlaylistModal}
+        openCreatePlaylistModal={openCreatePlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
       />
       <br />
@@ -423,11 +431,32 @@ function App() {
       {
         isPlaylistModalShow &&
         <Modal
-          allPlaylists={allPlaylists}
-          switchPlaylist={switchPlaylist}
+          title="Choose a playlist to play"
           closeModal={closeModal}
-          currentPlaylistId={currentPlaylistId}
-        />
+        >
+          {
+            allPlaylists.map(playlist => {
+                return <div
+                    key={playlist.id}
+                    className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-orange' : ''}`}
+                >   
+                    <span onClick={() => switchPlaylist(playlist.id)}>
+                        {truncateString(playlist.name, 80)}
+                    </span>
+                </div>
+            })
+          }
+        </Modal>
+      }
+
+      {
+        isCreatePlaylistModalShow &&
+        <Modal
+          title={`Add songs to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
+          closeModal={closeModal}
+        >
+          <h1>Create Playlist Now!!</h1>
+        </Modal>
       }
     </main>
   );

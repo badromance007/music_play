@@ -1,18 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ninjaCat from '../images/ninja_cat_cool.png';
-import { truncateString } from '../helpers/functions';
 
-export default function Modal({allPlaylists, switchPlaylist, closeModal, currentPlaylistId}) {
-    const playListNameElements =  allPlaylists.map(playlist => {
-                                    return <div
-                                        key={playlist.id}
-                                        className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-orange' : ''}`}
-                                    >   
-                                        <span onClick={() => switchPlaylist(playlist.id)}>
-                                            {truncateString(playlist.name, 80)}
-                                        </span>
-                                    </div>
-                                })
+export default function Modal(props) {
+    
     return (
         <div id="modal-container">
             <div className="modal-background">
@@ -20,17 +10,17 @@ export default function Modal({allPlaylists, switchPlaylist, closeModal, current
                     <div className='modal--wrapper'>
                         <div className='modal--header'>
                             <div>
-                                <h3>Choose a playlist to play</h3>
+                                <h3>{props.title}</h3>
                             </div>
                             <span
                                 className='modal--header_close'
-                                onClick={closeModal}
+                                onClick={props.closeModal}
                             >
                                 <FontAwesomeIcon icon="fa-solid fa-rectangle-xmark" />
                             </span>
                         </div>
                         <div className='modal--body'>
-                            {playListNameElements}
+                            {props.children}
                         </div>
                         <div className='modal--footer'>
                             <img src={ninjaCat} width="100" />
