@@ -1,22 +1,26 @@
 import './App.css';
 import { useEffect, useRef, useState } from 'react';
 import { songsData } from './seeds/songsData';
+import { playListData } from './seeds/playListData';
 import Mp3Player from './components/Mp3Player';
 import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
 import { shuffle } from './helpers/functions';
 import Playlist from './components/Playlist';
-import ninjaCat from './images/ninja_cat_cool.png';
+import { nanoid } from 'nanoid';
+import Modal from './components/Modal';
 
 function App() {
 
   // playlist states
   const [songs, setSongs] = useState(songsData)
+  const [currentSongId, setCurrentSongId] = useState((songs[0] && songs[0].id) || 0)
   const originalPlayList = useRef(songsData) // use to restore previous songs position when stop shuffling
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Custom playlist (CRUD songs)
-  const [myPlaylist, setMyPlayList] = useState([])
+  // Custom playlist (CRUD songs & playlists)
+  const [allPlaylists, setAllPlaylists] = useState(playListData)
+  const [currentPlaylistId, setCurrentPlaylistId] = useState((allPlaylists[0] && allPlaylists[0].id) || '')
 
   // volume states & volume slider and mute state
   const [volume, setVolume] = useState(100)
@@ -46,7 +50,7 @@ function App() {
   const [isMp3PlayerHidden, setIsMp3PlayerHidden] = useState(false)
 
   useEffect(() => {
-    // load track & play song when index changed
+    // load track & play song when song index changed or currentSongId changed
     loadTrack()
     
     if (isPlaying) {
@@ -55,7 +59,7 @@ function App() {
 
     // update title
     document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer
-  }, [currentIndex])
+  }, [currentIndex, currentSongId])
 
   // update track's volume when volume changed
   useEffect(() => {
@@ -216,6 +220,9 @@ function App() {
     if (repeat === REPEAT_PLAYLIST && currentIndex === songs.length - 1) {
       setCurrentPlayingTime(0)
       setCurrentIndex(0)
+
+      // repeat if playlist has just 1 song
+      if (songs.length === 1) playSong()
     } else if (repeat === REPEAT_ONE) {
       setCurrentPlayingTime(0)
       playSong()
@@ -338,6 +345,27 @@ function App() {
     document.querySelector('body').classList.remove('modal-active');
   }
 
+  function findCurrentPlaylist() {
+    return allPlaylists.find(playlist => (
+      playlist.id === currentPlaylistId
+    )) || allPlaylists[0]
+  }
+
+  // update list of songs and reset all song's states when playlist changed
+  useEffect(() => {
+    let newSongs = findCurrentPlaylist().songs
+    setSongs(newSongs)
+
+    // reset all song states
+    originalPlayList.current = newSongs
+    setIsShuffle(false)
+    setIsPlaying(false)
+    setCurrentIndex(0)
+    setCurrentSongId(newSongs[0].id)
+    setCurrentPlayingTime(0)
+    setDurationSliderPosition(0)
+  }, [currentPlaylistId])
+
   return (
     <main>
       <Playlist
@@ -345,6 +373,7 @@ function App() {
         currentIndex={currentIndex}
         playThisSong={playThisSong}
         openModal={openModal}
+        currentPlaylist={findCurrentPlaylist()}
       />
       <br />
       <Mp3Player 
@@ -377,17 +406,11 @@ function App() {
         toggleShowingMp3Player={toggleShowingMp3Player}
       />
 
-
-      <div id="modal-container">
-        <div className="modal-background">
-          <div className="modal">
-            <span onClick={closeModal}>Close button</span>
-            <h2>I'm a Modal</h2>
-            <p>Hear me roar.</p>
-            <img src={ninjaCat} width="100" />
-          </div>
-        </div>
-      </div>
+      <Modal
+        allPlaylists={allPlaylists}
+        setCurrentPlaylistId={setCurrentPlaylistId}
+        closeModal={closeModal}
+      />
     </main>
   );
 }

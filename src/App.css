@@ -351,11 +351,10 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .playlist--header {
-	/* background-color: yellow; */
-	display: grid;
-	grid-template-columns: 30% auto;
-	column-gap: 30px;
-	padding: 10px 10px 10px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
 }
 .playlist--header h1 {
 	text-shadow: 2px 2px 8px #fff;
@@ -463,6 +462,12 @@ input[type="range"]::-moz-range-thumb {
 		top: 45%;
 		transform: translate(-60%, -41.5%);
 	}
+
+
+	/* modal */
+	#modal-container .modal-background .modal {
+		width: 95% !important;
+	}
 } 
 
 
@@ -513,21 +518,31 @@ html.modal-active, body.modal-active {
 }
 #modal-container .modal-background .modal {
 	background: white;
-	padding: 50px;
-	display: inline-block;
+	width: 400px;
+	height: 500px;
+	padding: 10px;
 	border-radius: 3px;
 	font-weight: 300;
 	position: relative;
+	display: inline-block;
 }
-#modal-container .modal-background .modal h2 {
-	font-size: 25px;
-	line-height: 25px;
-	margin-bottom: 15px;
+.modal--wrapper{
+	height: 100%;
+	display: grid;
+	grid-template-rows: 5% 80% 15%;
 }
-#modal-container .modal-background .modal p {
-	font-size: 18px;
-	line-height: 22px;
+.modal--header {
+	text-align: right;
+	color: #FF8A65;
 }
+.modal--header .modal--header_close {
+	cursor: pointer;
+}
+.modal--body {
+}
+.modal--footer {
+}
+
 
 @keyframes unfoldIn {
 	0% {
