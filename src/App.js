@@ -328,7 +328,7 @@ function App() {
   function openModal() {
     console.log('open modal')
     document.querySelector('#modal-container').removeAttribute('class')
-    document.querySelector('#modal-container').classList.add('five')
+    document.querySelector('#modal-container').classList.add('fast')
     document.querySelector('body').classList.add('modal-active')
   }
 

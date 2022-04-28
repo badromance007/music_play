@@ -474,24 +474,24 @@ html.modal-active, body.modal-active {
 	transform: scale(0);
 	z-index: 1;
 }
-#modal-container.five {
+#modal-container.fast {
 	transform: scale(1);
 }
-#modal-container.five .modal-background {
+#modal-container.fast .modal-background {
 	background: rgba(0, 0, 0, .0);
 	animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-#modal-container.five .modal-background .modal {
+#modal-container.fast .modal-background .modal {
 	transform: translateX(-1500px);
 	animation: roadRunnerIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-#modal-container.five.out {
+#modal-container.fast.out {
 	animation: quickScaleDown 0s 0.5s linear forwards;
 }
-#modal-container.five.out .modal-background {
+#modal-container.fast.out .modal-background {
 	animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-#modal-container.five.out .modal-background .modal {
+#modal-container.fast.out .modal-background .modal {
 	animation: roadRunnerOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 #modal-container .modal-background {
