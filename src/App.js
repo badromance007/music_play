@@ -333,16 +333,15 @@ function App() {
   }, [])
 
   function openModal() {
-    console.log('open modal')
-    document.querySelector('#modal-container').removeAttribute('class')
-    document.querySelector('#modal-container').classList.add('fast')
-    document.querySelector('body').classList.add('modal-active')
+    setIsPlaylistModalShow(true)
   }
 
   function closeModal(event) {
-    console.log('close modal')
     document.querySelector('#modal-container').classList.add('out')
     document.querySelector('body').classList.remove('modal-active');
+    setTimeout(() => {
+      setIsPlaylistModalShow(false)
+    }, 700)
   }
 
   function findCurrentPlaylist(playListId) {
@@ -365,10 +364,21 @@ function App() {
     setCurrentSongId(currentPlaylist.songs[0].id)
     setCurrentPlayingTime(0)
     setDurationSliderPosition(0)
+    track.current.currentTime = 0;
+    pauseSong()
 
     // update current playlist id
     setCurrentPlaylistId(playListId)
   }
+
+  const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
+  useEffect(() => {
+    if (isPlaylistModalShow) {
+      document.querySelector('#modal-container').removeAttribute('class')
+      document.querySelector('#modal-container').classList.add('fast')
+      document.querySelector('body').classList.add('modal-active')
+    }
+  }, [isPlaylistModalShow])
 
   return (
     <main>
@@ -410,12 +420,15 @@ function App() {
         toggleShowingMp3Player={toggleShowingMp3Player}
       />
 
-      <Modal
-        allPlaylists={allPlaylists}
-        switchPlaylist={switchPlaylist}
-        closeModal={closeModal}
-        currentPlaylistId={currentPlaylistId}
-      />
+      {
+        isPlaylistModalShow &&
+        <Modal
+          allPlaylists={allPlaylists}
+          switchPlaylist={switchPlaylist}
+          closeModal={closeModal}
+          currentPlaylistId={currentPlaylistId}
+        />
+      }
     </main>
   );
 }
