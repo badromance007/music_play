@@ -596,6 +596,7 @@ html.modal-active, body.modal-active {
 	height: 100%;
 	overflow: auto;
 	padding-top: 240px;
+	color: #494155;
 }
 .modal--body_playlist-container {
 	display: flex;
@@ -605,6 +606,8 @@ html.modal-active, body.modal-active {
 	height: 100%;
 	overflow: auto;
 	padding-top: 80px;
+	font-weight: bold;
+	color: #997dc5;
 }
 .modal--body_form-container {
 	display: flex;
