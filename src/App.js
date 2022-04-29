@@ -336,8 +336,8 @@ function App() {
   function openPlaylistModal() {
     setIsPlaylistModalShow(true)
   }
-  function openCreatePlaylistModal() {
-    setIsCreatePlaylistModalShow(true)
+  function openAddSongToPlaylistModal() {
+    setIsAddSongToPlaylistModalShow(true)
   }
 
   function closeModal(event) {
@@ -345,7 +345,7 @@ function App() {
     document.querySelector('body').classList.remove('modal-active');
     setTimeout(() => {
       setIsPlaylistModalShow(false)
-      setIsCreatePlaylistModalShow(false)
+      setIsAddSongToPlaylistModalShow(false)
     }, 500)
   }
 
@@ -378,13 +378,14 @@ function App() {
 
   const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
   const [isCreatePlaylistModalShow, setIsCreatePlaylistModalShow] = useState(false)
+  const [isAddSongToPlaylistModalShow, setIsAddSongToPlaylistModalShow] = useState(false)
   useEffect(() => {
-    if (isPlaylistModalShow || isCreatePlaylistModalShow) {
+    if (isPlaylistModalShow || isAddSongToPlaylistModalShow) {
       document.querySelector('#modal-container').removeAttribute('class')
       document.querySelector('#modal-container').classList.add('fast')
       document.querySelector('body').classList.add('modal-active')
     }
-  }, [isPlaylistModalShow, isCreatePlaylistModalShow])
+  }, [isPlaylistModalShow, isAddSongToPlaylistModalShow])
 
   function addSongToPlaylist(song, playlist) {
     console.log('addSongToPlaylist => ')
@@ -408,11 +409,15 @@ function App() {
   const remainingSongsElements = remainingSongs.map(song => {
         return <div
             key={song.id}
-            className={`modal--body_playlist`}
+            className={`modal--body_songs`}
+            onClick={() => addSongToPlaylist(song, currentPlaylist)}
         >   
-            <span onClick={() => addSongToPlaylist(song, currentPlaylist)}>
-                {truncateString((`${song.name} - ${song.singer}`), 80)}
-            </span>
+          <span>
+            <img src={song.img} width="40" height="40" />
+          </span>
+          <span>
+            {truncateString((`${song.name} - ${song.singer}`), 80)}
+          </span>
         </div>
   })
 
@@ -423,7 +428,7 @@ function App() {
         currentIndex={currentIndex}
         playThisSong={playThisSong}
         openPlaylistModal={openPlaylistModal}
-        openCreatePlaylistModal={openCreatePlaylistModal}
+        openAddSongToPlaylistModal={openAddSongToPlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
       />
       <br />
@@ -479,12 +484,13 @@ function App() {
       }
 
       {
-        isCreatePlaylistModalShow &&
+        isAddSongToPlaylistModalShow &&
         <Modal
-          title={`Add songs to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
+          title={`Choose song to add to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
           closeModal={closeModal}
         >
           {remainingSongsElements}
+          {!remainingSongsElements.length && <p>No more songs to add.</p>}
         </Modal>
       }
     </main>

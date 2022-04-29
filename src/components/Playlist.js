@@ -2,7 +2,7 @@ import Song from "./Song"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { truncateString } from '../helpers/functions';
 
-export default function Playlist({ songs, currentIndex, playThisSong, openPlaylistModal, openCreatePlaylistModal, currentPlaylist }) {
+export default function Playlist({ songs, currentIndex, playThisSong, openPlaylistModal, openAddSongToPlaylistModal, currentPlaylist }) {
     const songElements = songs.map((song, songIndex) => (
         <Song
             key={song.id}
@@ -17,20 +17,28 @@ export default function Playlist({ songs, currentIndex, playThisSong, openPlayli
     return (
         <div className="playlist">
             <div className="playlist--header">
-                <div className="playlist--header_button-container">
-                    <button onClick={openCreatePlaylistModal}>
-                        <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
-                        <span>playlist</span>
-                    </button>
+                <div className="playlist--header_title">
+                    <h1>{playList.name}</h1>
                 </div>
-                <div>
-                    <h1>{truncateString(playList.name, 16)}</h1>
-                </div>
-                <div>
-                    <button onClick={openPlaylistModal}>
-                        <span><FontAwesomeIcon icon="fa-solid fa-headphones-simple" /></span>
-                        <span>playlists</span>
-                    </button>
+                <div className="playlist--header_actions">
+                    <div>
+                        <button>
+                            <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
+                            <span>playlist</span>
+                        </button>
+                    </div>
+                    <div>
+                        <button onClick={openAddSongToPlaylistModal}>
+                            <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
+                            <span><FontAwesomeIcon icon="fa-solid fa-music" /></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button onClick={openPlaylistModal}>
+                            <span><FontAwesomeIcon icon="fa-solid fa-headphones-simple" /></span>
+                            <span>playlists</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             {songElements}
