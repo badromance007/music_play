@@ -339,6 +339,9 @@ function App() {
   function openAddSongToPlaylistModal() {
     setIsAddSongToPlaylistModalShow(true)
   }
+  function openCreatePlaylistModal() {
+    setIsCreatePlaylistModalShow(true)
+  }
 
   function closeModal(event) {
     document.querySelector('#modal-container').classList.add('out')
@@ -346,6 +349,7 @@ function App() {
     setTimeout(() => {
       setIsPlaylistModalShow(false)
       setIsAddSongToPlaylistModalShow(false)
+      setIsCreatePlaylistModalShow(false)
     }, 500)
   }
 
@@ -379,19 +383,19 @@ function App() {
   const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
   const [isCreatePlaylistModalShow, setIsCreatePlaylistModalShow] = useState(false)
   const [isAddSongToPlaylistModalShow, setIsAddSongToPlaylistModalShow] = useState(false)
+  const defaultFormData = useRef({
+    playlistName: ''
+  })
+  const [formData, setFormData] = useState(defaultFormData.current)
   useEffect(() => {
-    if (isPlaylistModalShow || isAddSongToPlaylistModalShow) {
+    if (isPlaylistModalShow || isAddSongToPlaylistModalShow || isCreatePlaylistModalShow) {
       document.querySelector('#modal-container').removeAttribute('class')
       document.querySelector('#modal-container').classList.add('fast')
       document.querySelector('body').classList.add('modal-active')
     }
-  }, [isPlaylistModalShow, isAddSongToPlaylistModalShow])
+  }, [isPlaylistModalShow, isAddSongToPlaylistModalShow, isCreatePlaylistModalShow])
 
   function addSongToPlaylist(song, playlist) {
-    console.log('addSongToPlaylist => ')
-    console.log('song => ', song)
-    console.log('playlist => ', playlist)
-
     playlist.songs.push(song)
     setAllPlaylists(prevPlaylists => prevPlaylists.map(oldPlaylist => (
       oldPlaylist.id === playlist.id ?
@@ -421,6 +425,34 @@ function App() {
         </div>
   })
 
+  function handleFormChange(event) {
+    const { name, value } = event.target
+    setFormData(prevData => (
+      {
+        ...prevData,
+        [name]: value
+      }
+    ))
+  }
+
+  function createNewPlaylist(event) {
+    event.preventDefault()
+
+    setAllPlaylists(prevPlaylists => {
+      return [
+        ...prevPlaylists,
+        {
+          id: nanoid(),
+          name: formData.playlistName,
+          songs: []
+        }
+      ]
+    })
+
+    // reset form
+    setFormData(defaultFormData.current)
+  }
+
   return (
     <main>
       <Playlist
@@ -429,6 +461,7 @@ function App() {
         playThisSong={playThisSong}
         openPlaylistModal={openPlaylistModal}
         openAddSongToPlaylistModal={openAddSongToPlaylistModal}
+        openCreatePlaylistModal={openCreatePlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
       />
       <br />
@@ -491,6 +524,25 @@ function App() {
         >
           {remainingSongsElements}
           {!remainingSongsElements.length && <p>No more songs to add.</p>}
+        </Modal>
+      }
+
+      {
+        isCreatePlaylistModalShow &&
+        <Modal
+          title="Create new playlist"
+          closeModal={closeModal}
+        >
+          <form onSubmit={(event) => createNewPlaylist(event)}>
+            <input
+              type="text"
+              name="playlistName"
+              placeholder="Enter playlist name here..."
+              value={formData.playlistName}
+              onChange={handleFormChange}
+            />
+            <button>Create</button>
+          </form>
         </Modal>
       }
     </main>

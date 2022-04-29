@@ -2,7 +2,15 @@ import Song from "./Song"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { truncateString } from '../helpers/functions';
 
-export default function Playlist({ songs, currentIndex, playThisSong, openPlaylistModal, openAddSongToPlaylistModal, currentPlaylist }) {
+export default function Playlist({
+    songs,
+    currentIndex,
+    playThisSong,
+    openPlaylistModal,
+    openAddSongToPlaylistModal,
+    openCreatePlaylistModal,
+    currentPlaylist
+}) {
     const songElements = songs.map((song, songIndex) => (
         <Song
             key={song.id}
@@ -22,7 +30,7 @@ export default function Playlist({ songs, currentIndex, playThisSong, openPlayli
                 </div>
                 <div className="playlist--header_actions">
                     <div>
-                        <button>
+                        <button onClick={openCreatePlaylistModal}>
                             <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
                             <span>playlist</span>
                         </button>
