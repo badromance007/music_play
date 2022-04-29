@@ -1,10 +1,15 @@
+body {
+	background: linear-gradient(to right, #fff, #5e6b77);
+}
+
 main {
 	width: 100%;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	background: linear-gradient(to right, #fff, #5e6b77);
+	/* background: linear-gradient(to right, #fff, #5e6b77); */
 }
 
 /* player */
@@ -309,6 +314,7 @@ input[type="range"]::-moz-range-thumb {
 /* playlist */
 .playlist {
 	width: 800px;
+	height: 50%;
 	padding: 20px;
 }
 .playlist--song {
@@ -394,6 +400,11 @@ input[type="range"]::-moz-range-thumb {
 	margin-right: 5px;
 }
 
+.playlist--body {
+	height: 80%;
+    overflow: auto;
+}
+
 /* large screen display */
 @media only screen and (min-width: 769px) {
 	.right button:hover {
@@ -406,6 +417,9 @@ input[type="range"]::-moz-range-thumb {
 
 /* Mobile display */
 @media only screen and (max-width: 768px) {
+	main {
+		height: auto;
+	}
 	.playlist {
 		width: 100%;
 		padding: 10px;
@@ -559,12 +573,7 @@ html.modal-active, body.modal-active {
 	color: #FF8A65;
 }
 .modal--body {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
-	overflow-y: auto;
-	padding: 130px 0 20px 0;
+	/* overflow: auto; */
 }
 .modal--body_playlist {
 	height: 50px;
@@ -578,6 +587,31 @@ html.modal-active, body.modal-active {
 .modal--body_playlist span {
 	cursor: pointer;
 	font-size: 0.9rem;
+}
+.modal--body_songs-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	overflow: auto;
+	padding-top: 240px;
+}
+.modal--body_playlist-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	overflow: auto;
+	padding-top: 80px;
+}
+.modal--body_form-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
 }
 .modal--body_songs {
 	height: 50px;

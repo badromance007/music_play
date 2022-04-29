@@ -26,7 +26,7 @@ export default function Playlist({
         <div className="playlist">
             <div className="playlist--header">
                 <div className="playlist--header_title">
-                    <h1>{playList.name}</h1>
+                    <h1>{truncateString(playList.name, 45)}</h1>
                 </div>
                 <div className="playlist--header_actions">
                     <div>
@@ -49,7 +49,9 @@ export default function Playlist({
                     </div>
                 </div>
             </div>
-            {songElements}
+            <div className="playlist--body">
+                {songElements}
+            </div>
         </div>
     )
 }

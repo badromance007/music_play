@@ -501,18 +501,20 @@ function App() {
           title="Choose a playlist to play"
           closeModal={closeModal}
         >
-          {
-            allPlaylists.map(playlist => {
-                return <div
-                    key={playlist.id}
-                    className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-orange' : ''}`}
-                >   
-                    <span onClick={() => switchPlaylist(playlist.id)}>
-                        {truncateString(playlist.name, 80)}
-                    </span>
-                </div>
-            })
-          }
+          <div className='modal--body_playlist-container'>
+            {
+              allPlaylists.map(playlist => {
+                  return <div
+                      key={playlist.id}
+                      className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-orange' : ''}`}
+                  >   
+                      <span onClick={() => switchPlaylist(playlist.id)}>
+                          {truncateString(playlist.name, 80)}
+                      </span>
+                  </div>
+              })
+            }
+          </div>
         </Modal>
       }
 
@@ -522,8 +524,10 @@ function App() {
           title={`Choose song to add to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
           closeModal={closeModal}
         >
-          {remainingSongsElements}
-          {!remainingSongsElements.length && <p>No more songs to add.</p>}
+          <div className='modal--body_songs-container'>
+            {remainingSongsElements}
+            {!remainingSongsElements.length && <p>No more songs to add.</p>}
+          </div>
         </Modal>
       }
 
@@ -533,16 +537,18 @@ function App() {
           title="Create new playlist"
           closeModal={closeModal}
         >
-          <form onSubmit={(event) => createNewPlaylist(event)}>
-            <input
-              type="text"
-              name="playlistName"
-              placeholder="Enter playlist name here..."
-              value={formData.playlistName}
-              onChange={handleFormChange}
-            />
-            <button>Create</button>
-          </form>
+          <div className='modal--body_form-container'>
+            <form onSubmit={(event) => createNewPlaylist(event)}>
+              <input
+                type="text"
+                name="playlistName"
+                placeholder="Enter playlist name here..."
+                value={formData.playlistName}
+                onChange={handleFormChange}
+              />
+              <button>Create</button>
+            </form>
+          </div>
         </Modal>
       }
     </main>
