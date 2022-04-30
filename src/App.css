@@ -362,6 +362,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .playlist--song_album > div span{
 	color: #494155;
+	margin-left: 15px;
 }
 .playlist--song_album > div span:hover {
 	cursor: pointer;
@@ -428,6 +429,12 @@ input[type="range"]::-moz-range-thumb {
 
 /* Mobile display */
 @media only screen and (max-width: 768px) {
+	.playlist--song_album {
+		justify-content: flex-end;
+	}
+	.playlist--song_album__name {
+		display: none;
+	}
 	main {
 		height: auto;
 	}

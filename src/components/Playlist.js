@@ -10,7 +10,9 @@ export default function Playlist({
     openAddSongToPlaylistModal,
     openCreatePlaylistModal,
     currentPlaylist,
-    moveSongToTopList
+    moveSongToTopList,
+    allPlaylists,
+    deleteThisSong
 }) {
     const songElements = songs.map((song, songIndex) => (
         songs.length > 0 && <Song
@@ -19,6 +21,9 @@ export default function Playlist({
             song={song}
             playThisSong={() => playThisSong(songIndex)}
             moveSongToTopList={moveSongToTopList}
+            currentPlaylist={currentPlaylist()}
+            allPlaylists={allPlaylists}
+            deleteThisSong={deleteThisSong}
         />
     ))
 

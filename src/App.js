@@ -397,7 +397,6 @@ function App() {
     // update current playlist id
     setCurrentPlaylistId(playListId)
 
-
     setIsEditingPlaylist(false)
   }
 
@@ -552,10 +551,40 @@ function App() {
     setSongs(newSongs)
 
     setAllPlaylists(oldPlaylists => oldPlaylists.map(oldPlaylist => (
+      oldPlaylist.id === currentPlaylistId ?
       {
         ...oldPlaylist,
         songs: newSongs
-      }
+      } :
+      oldPlaylist
+    )))
+
+
+    // reset all song states
+    pauseSong()
+    originalPlayList.current = newSongs
+    setIsShuffle(false)
+    setIsPlaying(false)
+    setCurrentIndex(newSongs[0] ? 0 : -1)
+    setCurrentSongId(newSongs[0] ? newSongs[0].id : 0)
+    setCurrentPlayingTime(0)
+    setDurationSliderPosition(0)
+    track.current.currentTime = 0;
+    setFullDuration(0)
+  }
+
+  function deleteThisSong(event, song) {
+    event.stopPropagation()
+
+    const newSongs = songs.filter(oldSong => oldSong.id !== song.id)
+    setSongs(newSongs)
+    setAllPlaylists(oldPlaylists => oldPlaylists.map(oldPlaylist => (
+      oldPlaylist.id === currentPlaylistId ?
+      {
+        ...oldPlaylist,
+        songs: newSongs
+      } :
+      oldPlaylist
     )))
 
 
@@ -583,6 +612,8 @@ function App() {
         openCreatePlaylistModal={openCreatePlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
         moveSongToTopList={moveSongToTopList}
+        allPlaylists={allPlaylists}
+        deleteThisSong={deleteThisSong}
       />
       <br />
       <Mp3Player 
