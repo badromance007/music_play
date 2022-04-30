@@ -1,7 +1,6 @@
 import './App.css';
 import { useEffect, useRef, useState } from 'react';
 import { songsData } from './seeds/songsData';
-import { playListData } from './seeds/playListData';
 import Mp3Player from './components/Mp3Player';
 import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
 import { shuffle } from './helpers/functions';
@@ -25,7 +24,7 @@ function App() {
       {
         id: nanoid(),
         name: 'Default Playlist',
-        songs: songsData
+        songs: songs
       }
     ]
   )
@@ -421,12 +420,12 @@ function App() {
     if (!playlist.songs.length)
       setCurrentSongId(song.id)
       
-    playlist.songs.push(song)
+    setSongs(prevSongs => [...prevSongs, song])
     setAllPlaylists(prevPlaylists => prevPlaylists.map(oldPlaylist => (
       oldPlaylist.id === playlist.id ?
       {
         ...oldPlaylist,
-        songs: playlist.songs
+        songs: [...oldPlaylist.songs, song]
       } :
       oldPlaylist
     )))

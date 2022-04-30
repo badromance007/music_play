@@ -56,8 +56,8 @@ export default function Mp3Player(props) {
 
                 {/* song title & artist name */}
                 <div className='song-info' onClick={props.toggleShowingMp3Player}>
-                    <p id='title'>{ props.songs.length > 0 && props.songs[props.currentIndex].name }</p>
-                    <p id='artist'>{ props.songs.length > 0 && props.songs[props.currentIndex].singer }</p>
+                    <p id='title'>{ props.songs.length > 0 ? props.songs[props.currentIndex].name : "(no song's title)" }</p>
+                    <p id='artist'>{ props.songs.length > 0 ? props.songs[props.currentIndex].singer : "(no singer's name)" }</p>
                 </div>
 
                 {/* middle part */}
