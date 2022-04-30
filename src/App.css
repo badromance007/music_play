@@ -356,8 +356,15 @@ input[type="range"]::-moz-range-thumb {
 }
 .playlist--song_album {
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	color: rgb(83, 83, 83);
+}
+.playlist--song_album > div span{
+	color: #494155;
+}
+.playlist--song_album > div span:hover {
+	cursor: pointer;
 }
 
 .playlist--header {

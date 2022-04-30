@@ -1,4 +1,6 @@
-export default function Song({song, className, playThisSong}) {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+export default function Song({song, className, playThisSong, moveSongToTopList}) {
     return (
         <div
             className={`playlist--song ${className}`}
@@ -12,6 +14,11 @@ export default function Song({song, className, playThisSong}) {
 
             <div className="playlist--song_album">
                 <span>{song.album}</span>
+                <div>
+                    <span onClick={(event, currentSong) => moveSongToTopList(event, song)}>
+                        <FontAwesomeIcon icon="fa-solid fa-arrow-up-short-wide" />
+                    </span>
+                </div>
             </div>
         </div>
     )

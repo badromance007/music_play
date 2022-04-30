@@ -9,7 +9,8 @@ export default function Playlist({
     openPlaylistModal,
     openAddSongToPlaylistModal,
     openCreatePlaylistModal,
-    currentPlaylist
+    currentPlaylist,
+    moveSongToTopList
 }) {
     const songElements = songs.map((song, songIndex) => (
         songs.length > 0 && <Song
@@ -17,6 +18,7 @@ export default function Playlist({
             className={song.id === songs[currentIndex].id ? 'bg-blue' : ''}
             song={song}
             playThisSong={() => playThisSong(songIndex)}
+            moveSongToTopList={moveSongToTopList}
         />
     ))
 

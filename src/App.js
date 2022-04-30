@@ -504,8 +504,6 @@ function App() {
     if (playlistId !== currentPlaylistId) {
       setIsEditingPlaylist(prevState => !prevState)
       setTargetingPlaylistId(playlistId)
-      console.log('edit playlist')
-
 
       setFormData(prevFormData => ({
         ...prevFormData,
@@ -546,6 +544,34 @@ function App() {
     }
   }, [isEditingPlaylist])
 
+  function moveSongToTopList(event, song) {
+    event.stopPropagation()
+
+    const newSongs = songs.filter(oldSong => oldSong.id !== song.id)
+    newSongs.unshift(song)
+    setSongs(newSongs)
+
+    setAllPlaylists(oldPlaylists => oldPlaylists.map(oldPlaylist => (
+      {
+        ...oldPlaylist,
+        songs: newSongs
+      }
+    )))
+
+
+    // reset all song states
+    pauseSong()
+    originalPlayList.current = newSongs
+    setIsShuffle(false)
+    setIsPlaying(false)
+    setCurrentIndex(newSongs[0] ? 0 : -1)
+    setCurrentSongId(newSongs[0] ? newSongs[0].id : 0)
+    setCurrentPlayingTime(0)
+    setDurationSliderPosition(0)
+    track.current.currentTime = 0;
+    setFullDuration(0)
+  }
+
   return (
     <main>
       <Playlist
@@ -556,6 +582,7 @@ function App() {
         openAddSongToPlaylistModal={openAddSongToPlaylistModal}
         openCreatePlaylistModal={openCreatePlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
+        moveSongToTopList={moveSongToTopList}
       />
       <br />
       <Mp3Player 
