@@ -5,7 +5,7 @@ export const playListData = [
     {
         id: nanoid(),
         name: 'Default Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist Playlist',
-        songs: songsData
+        songs: []
     },
     {
         id: nanoid(),

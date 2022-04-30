@@ -12,7 +12,7 @@ export default function Playlist({
     currentPlaylist
 }) {
     const songElements = songs.map((song, songIndex) => (
-        <Song
+        songs.length > 0 && <Song
             key={song.id}
             className={song.id === songs[currentIndex].id ? 'bg-blue' : ''}
             song={song}
@@ -51,6 +51,10 @@ export default function Playlist({
             </div>
             <div className="playlist--body">
                 {songElements}
+                {
+                    !songElements.length &&
+                    <p style={{padding: '20px', textAlign: 'center'}}>(This playlist has no songs. Click the button above to add songs.)</p>
+                }
             </div>
         </div>
     )

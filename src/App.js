@@ -17,10 +17,18 @@ function App() {
   const [currentSongId, setCurrentSongId] = useState((songs[0] && songs[0].id) || 0)
   const originalPlayList = useRef(songsData) // use to restore previous songs position when stop shuffling
   const [isPlaying, setIsPlaying] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(songs[0] ? 0 : -1)
 
   // Custom playlist (CRUD songs & playlists)
-  const [allPlaylists, setAllPlaylists] = useState(playListData)
+  const [allPlaylists, setAllPlaylists] = useState(
+    [
+      {
+        id: nanoid(),
+        name: 'Default Playlist',
+        songs: songsData
+      }
+    ]
+  )
   const [currentPlaylistId, setCurrentPlaylistId] = useState((allPlaylists[0] && allPlaylists[0].id) || '')
 
   // volume states & volume slider and mute state
@@ -59,7 +67,10 @@ function App() {
     }
 
     // update title
-    document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer + ' | ' + findCurrentPlaylist(currentPlaylistId).name
+    if (songs.length)
+      document.title = songs[currentIndex].name + ' - ' + songs[currentIndex].singer + ' | ' + findCurrentPlaylist(currentPlaylistId).name
+    else
+      document.title = findCurrentPlaylist(currentPlaylistId).name
   }, [currentIndex, currentSongId, currentPlaylistId])
 
   // update track's volume when volume changed
@@ -81,8 +92,10 @@ function App() {
   function loadTrack() {
     resetDurationSlider()
 
-    track.current.src = songs[currentIndex].path;
-    track.current.load();
+    if (songs.length) {
+      track.current.src = songs[currentIndex].path;
+      track.current.load();
+    }
   }
 
   function songPlaying(){
@@ -108,6 +121,8 @@ function App() {
 
   // Play or pause song
   function justPlay() {
+    console.log('currentIndex => ', currentIndex)
+    console.log('currentSongId => ', currentSongId)
     setIsPlaying(prevState => !prevState)
 
     if(!isPlaying) {
@@ -118,7 +133,9 @@ function App() {
   }
 
   function playSong() {
-    track.current.play();
+    if (currentIndex >= 0 && currentSongId) {
+      track.current.play();
+    }
 
     if (!audioContext.current) {
       createVisualyzer();
@@ -366,15 +383,16 @@ function App() {
     setSongs(currentPlaylist.songs)
 
     // reset all song states
+    pauseSong()
     originalPlayList.current = currentPlaylist.songs
     setIsShuffle(false)
     setIsPlaying(false)
-    setCurrentIndex(0)
-    setCurrentSongId(currentPlaylist.songs[0].id)
+    setCurrentIndex(currentPlaylist.songs[0] ? 0 : -1)
+    setCurrentSongId(currentPlaylist.songs[0] ? currentPlaylist.songs[0].id : 0)
     setCurrentPlayingTime(0)
     setDurationSliderPosition(0)
     track.current.currentTime = 0;
-    pauseSong()
+    setFullDuration(0)
 
     // update current playlist id
     setCurrentPlaylistId(playListId)
@@ -396,6 +414,13 @@ function App() {
   }, [isPlaylistModalShow, isAddSongToPlaylistModalShow, isCreatePlaylistModalShow])
 
   function addSongToPlaylist(song, playlist) {
+    console.log('add song: ', song)
+    if (currentIndex < 0)
+      setCurrentIndex(0)
+
+    if (!playlist.songs.length)
+      setCurrentSongId(song.id)
+      
     playlist.songs.push(song)
     setAllPlaylists(prevPlaylists => prevPlaylists.map(oldPlaylist => (
       oldPlaylist.id === playlist.id ?

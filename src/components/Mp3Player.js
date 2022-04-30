@@ -17,10 +17,14 @@ export default function Mp3Player(props) {
             <div className='left'>
                 {/* song image */}
                 <div className='image-track-container'>
-                    <img
-                        src={props.songs[props.currentIndex].img}
-                        className={[props.isPlaying && 'blur-img']}
-                    />
+                    {
+                        props.songs.length > 0 &&
+                        <img
+                            src={props.songs[props.currentIndex].img}
+                            className={[props.isPlaying && 'blur-img']}
+                        />
+                    }
+                    
 
                     <Visualyzer
                         visualyzer={props.visualyzer}
@@ -52,8 +56,8 @@ export default function Mp3Player(props) {
 
                 {/* song title & artist name */}
                 <div className='song-info' onClick={props.toggleShowingMp3Player}>
-                    <p id='title'>{ props.songs[props.currentIndex].name }</p>
-                    <p id='artist'>{ props.songs[props.currentIndex].singer }</p>
+                    <p id='title'>{ props.songs.length > 0 && props.songs[props.currentIndex].name }</p>
+                    <p id='artist'>{ props.songs.length > 0 && props.songs[props.currentIndex].singer }</p>
                 </div>
 
                 {/* middle part */}
