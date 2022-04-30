@@ -20,8 +20,8 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(songs[0] ? 0 : -1)
 
   // Custom playlist (CRUD songs & playlists)
-  const [allPlaylists, setAllPlaylists] = useState(
-    [
+  const [allPlaylists, setAllPlaylists] = useState(() =>
+    JSON.parse(localStorage.getItem('allPlaylists')) ||[
       {
         id: nanoid(),
         name: 'Default Playlist',
@@ -57,6 +57,10 @@ function App() {
 
   // control mp3Player on mobile
   const [isMp3PlayerHidden, setIsMp3PlayerHidden] = useState(false)
+
+  useEffect(() => {
+    localStorage.setItem('allPlaylists', JSON.stringify(allPlaylists))
+  }, [allPlaylists])
 
   useEffect(() => {
     // load track & play song when song index changed or currentSongId changed or currentplaylistId changed
