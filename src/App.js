@@ -120,8 +120,6 @@ function App() {
 
   // Play or pause song
   function justPlay() {
-    console.log('currentIndex => ', currentIndex)
-    console.log('currentSongId => ', currentSongId)
     setIsPlaying(prevState => !prevState)
 
     if(!isPlaying) {
@@ -413,7 +411,6 @@ function App() {
   }, [isPlaylistModalShow, isAddSongToPlaylistModalShow, isCreatePlaylistModalShow])
 
   function addSongToPlaylist(song, playlist) {
-    console.log('add song: ', song)
     if (currentIndex < 0)
       setCurrentIndex(0)
 
