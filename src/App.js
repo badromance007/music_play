@@ -8,6 +8,7 @@ import Playlist from './components/Playlist';
 import { nanoid } from 'nanoid';
 import Modal from './components/Modal';
 import { truncateString } from './helpers/functions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function App() {
 
@@ -482,6 +483,13 @@ function App() {
     setFormData(defaultFormData.current)
   }
 
+  function deletePlaylist(event, playlistId) {
+    event.stopPropagation()
+
+    if (playlistId !== currentPlaylistId)
+      setAllPlaylists(oldPlaylists => oldPlaylists.filter(oldPlaylist => oldPlaylist.id !== playlistId))
+  }
+
   return (
     <main>
       <Playlist
@@ -541,6 +549,16 @@ function App() {
                       <span>
                           {truncateString(playlist.name, 80)}
                       </span>
+                      <div>
+                        {
+                          (currentPlaylistId !== playlist.id && playlist.id !== allPlaylists[0].id) &&
+                          <span
+                            onClick={(event, playlistId) => deletePlaylist(event, playlist.id)}
+                          >
+                            <FontAwesomeIcon icon="fa-solid fa-trash-can" />  
+                          </span>
+                        }
+                      </div>
                   </div>
               })
             }
