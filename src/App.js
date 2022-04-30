@@ -460,19 +460,27 @@ function App() {
     ))
   }
 
+  const errorMessage = useRef()
+
   function createNewPlaylist(event) {
     event.preventDefault()
 
-    setAllPlaylists(prevPlaylists => {
-      return [
-        ...prevPlaylists,
-        {
-          id: nanoid(),
-          name: formData.playlistName,
-          songs: []
-        }
-      ]
-    })
+    if (formData.playlistName.trim().length) {
+      setAllPlaylists(prevPlaylists => {
+        return [
+          ...prevPlaylists,
+          {
+            id: nanoid(),
+            name: formData.playlistName,
+            songs: []
+          }
+        ]
+      })
+      errorMessage.current.innerHTML = "<span style='color: green'>Playlist <strong>" + 
+        formData.playlistName + "</strong> has been created successfully!</span>"
+    } else {
+      errorMessage.current.innerHTML = "<span style='color: red'>Please enter a playlist name.</span>"
+    }
 
     // reset form
     setFormData(defaultFormData.current)
@@ -531,9 +539,10 @@ function App() {
               allPlaylists.map(playlist => {
                   return <div
                       key={playlist.id}
-                      className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-orange' : ''}`}
+                      className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-purple' : ''}`}
+                      onClick={() => switchPlaylist(playlist.id)}
                   >   
-                      <span onClick={() => switchPlaylist(playlist.id)}>
+                      <span>
                           {truncateString(playlist.name, 80)}
                       </span>
                   </div>
@@ -563,11 +572,13 @@ function App() {
           closeModal={closeModal}
         >
           <div className='modal--body_form-container'>
+            <div ref={errorMessage}></div>
             <form onSubmit={(event) => createNewPlaylist(event)}>
               <input
                 type="text"
                 name="playlistName"
-                placeholder="Enter playlist name here..."
+                placeholder="Playlist name"
+                autoComplete="off"
                 value={formData.playlistName}
                 onChange={handleFormChange}
               />

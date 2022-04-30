@@ -285,6 +285,10 @@ input[type="range"]::-moz-range-thumb {
 	background-color: #FF8A65 !important;
 	color: #fff;
 }
+.bg-purple {
+	background-color: #5d6d7e !important;
+	color: #fff;
+}
 .bg-transparent {
 	background-color: rgba(255,255,255,0.1) !important;
 	color: #fff;
@@ -565,12 +569,12 @@ html.modal-active, body.modal-active {
 }
 .modal--header h3 {
 	font-size: 1rem;
-	color: #FF8A65;
+	color: #5d6d7e;
 	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 .modal--header .modal--header_close {
 	cursor: pointer;
-	color: #FF8A65;
+	color: #5d6d7e;
 }
 .modal--body {
 	/* overflow: auto; */
@@ -583,9 +587,13 @@ html.modal-active, body.modal-active {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
+}
+.modal--body_playlist:hover {
+	background-color: #5d6d7e;
+	color: #fff;
 }
 .modal--body_playlist span {
-	cursor: pointer;
 	font-size: 0.9rem;
 }
 .modal--body_songs-container {
@@ -607,7 +615,7 @@ html.modal-active, body.modal-active {
 	overflow: auto;
 	padding-top: 80px;
 	font-weight: bold;
-	color: #997dc5;
+	color: #5d6d7e;
 }
 .modal--body_form-container {
 	display: flex;
@@ -615,6 +623,38 @@ html.modal-active, body.modal-active {
 	flex-direction: column;
 	justify-content: center;
 	height: 100%;
+}
+.modal--body_form-container > div {
+	width: 100%;
+	text-align: left;
+	margin-bottom: 10px;
+}
+.modal--body_form-container > form {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 80% 20%;
+} 
+.modal--body_form-container input[type="text"]{
+	padding: 10px;
+	outline: none;
+	border: 1px solid #5d6d7e;
+	font-size: 1rem;
+	margin-right: 10px;
+	color: #5d6d7e;
+}
+.modal--body_form-container button {
+	padding: 10px;
+	font-weight: bold;
+	color: #5d6d7e;
+	background-color: #fff;
+	border: 1px solid #5d6d7e;
+	cursor: pointer;
+	outline: none;
+}
+.modal--body_form-container button:active {
+	color: #fff;
+	background-color: #5d6d7e;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 }
 .modal--body_songs {
 	height: 50px;
@@ -626,7 +666,7 @@ html.modal-active, body.modal-active {
 	cursor: pointer;
 }
 .modal--body_songs:hover {
-	background-color: #FF8A65;
+	background-color: #5d6d7e;
 	color: #fff;
 }
 .modal--body_songs span:nth-child(1){
