@@ -199,4 +199,28 @@ export const songsData = [
         singer: '911',
         album: 'I Do (Single)'
     },
+    {
+        id: 26,
+        name: 'Beautiful In White',
+        path: 'music/beautiful_in_white.mp3',
+        img: 'images/beautiful_in_white.jpg',
+        singer: 'Westlife (Shane filan)',
+        album: 'Love Always'
+    },
+    {
+        id: 27,
+        name: 'Until You',
+        path: 'music/until_you.mp3',
+        img: 'images/until_you.jpg',
+        singer: 'Shayne Ward',
+        album: 'Breathless'
+    },
+    {
+        id: 28,
+        name: 'Why Not Me',
+        path: 'music/why_not_me.mp3',
+        img: 'images/why_not_me.jpg',
+        singer: 'Enrique Iglesias',
+        album: 'Euphoria'
+    },
 ]
