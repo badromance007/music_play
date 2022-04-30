@@ -366,6 +366,8 @@ function App() {
       setIsAddSongToPlaylistModalShow(false)
       setIsCreatePlaylistModalShow(false)
     }, 500)
+
+    setIsEditingPlaylist(false)
   }
 
   function findCurrentPlaylist(playListId) {
@@ -394,6 +396,9 @@ function App() {
 
     // update current playlist id
     setCurrentPlaylistId(playListId)
+
+
+    setIsEditingPlaylist(false)
   }
 
   const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
@@ -490,6 +495,57 @@ function App() {
       setAllPlaylists(oldPlaylists => oldPlaylists.filter(oldPlaylist => oldPlaylist.id !== playlistId))
   }
 
+  const [isEditingPlaylist, setIsEditingPlaylist] = useState(false)
+  const [targetingPlaylistId, setTargetingPlaylistId] = useState('')
+
+  function editPlaylist(event, playlistId) {
+    event.stopPropagation()
+
+    if (playlistId !== currentPlaylistId) {
+      setIsEditingPlaylist(prevState => !prevState)
+      setTargetingPlaylistId(playlistId)
+      console.log('edit playlist')
+
+
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        playlistName: findCurrentPlaylist(playlistId).name
+      }))
+    }
+  }
+
+  function preventPopaganda(event) {
+    event.stopPropagation()
+  }
+
+  function updatePlaylistName(event, playlistId) {
+    event.preventDefault()
+
+    if (formData.playlistName.trim().length) {
+      setAllPlaylists(oldPlaylists => oldPlaylists.map(oldPlaylist => (
+        oldPlaylist.id === playlistId ?
+        {
+          ...oldPlaylist,
+          name: formData.playlistName
+        } :
+        oldPlaylist
+      )))
+      // errorMessage.current.innerHTML = "<span style='color: green'>Playlist <strong>" + 
+      //   formData.playlistName + "</strong> has been created successfully!</span>"
+
+      setIsEditingPlaylist(false)
+    } else {
+      // errorMessage.current.innerHTML = "<span style='color: red'>Please enter a playlist name.</span>"
+    }
+  }
+
+  useEffect(() => {
+    if (!isEditingPlaylist) {
+      // reset form
+      setFormData(defaultFormData.current)
+    }
+  }, [isEditingPlaylist])
+
   return (
     <main>
       <Playlist
@@ -546,17 +602,41 @@ function App() {
                       className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-purple' : ''}`}
                       onClick={() => switchPlaylist(playlist.id)}
                   >   
-                      <span>
+                      {
+                        (isEditingPlaylist && playlist.id === targetingPlaylistId)
+                        ?
+                          <form onSubmit={(event, playlistId) => updatePlaylistName(event, playlist.id)}>
+                            <input
+                              type="text"
+                              name="playlistName"
+                              placeholder="Playlist name"
+                              autoComplete="off"
+                              value={formData.playlistName}
+                              onChange={handleFormChange}
+                              onClick={(event) => preventPopaganda(event)}
+                            />
+                            <button onClick={(event) => preventPopaganda(event)}>Update</button>
+                          </form>
+                        :
+                        <span>
                           {truncateString(playlist.name, 80)}
-                      </span>
+                        </span>
+                      }
                       <div>
                         {
                           (currentPlaylistId !== playlist.id && playlist.id !== allPlaylists[0].id) &&
-                          <span
-                            onClick={(event, playlistId) => deletePlaylist(event, playlist.id)}
-                          >
-                            <FontAwesomeIcon icon="fa-solid fa-trash-can" />  
-                          </span>
+                          <>
+                            <span
+                              onClick={(event, playlistId) => editPlaylist(event, playlist.id)}
+                            >
+                              <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+                            </span>
+                            <span
+                              onClick={(event, playlistId) => deletePlaylist(event, playlist.id)}
+                            >
+                              <FontAwesomeIcon icon="fa-solid fa-trash-can" />
+                            </span>
+                          </>
                         }
                       </div>
                   </div>
