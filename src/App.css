@@ -563,6 +563,7 @@ html.modal-active, body.modal-active {
 	display: flex;
     justify-content: space-between;
 	align-items: center;
+	margin-bottom: 10px;
 }
 .modal--header div {
 	width: 100%;
@@ -577,7 +578,8 @@ html.modal-active, body.modal-active {
 	color: #5d6d7e;
 }
 .modal--body {
-	/* overflow: auto; */
+	position: relative;
+	overflow: auto;
 }
 .modal--body_playlist {
 	height: 50px;
@@ -597,23 +599,25 @@ html.modal-active, body.modal-active {
 	font-size: 0.9rem;
 }
 .modal--body_songs-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	height: 100%;
-	overflow: auto;
-	padding-top: 240px;
 	color: #494155;
 }
 .modal--body_playlist-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	height: 100%;
-	overflow: auto;
-	padding-top: 80px;
 	font-weight: bold;
 	color: #5d6d7e;
 }

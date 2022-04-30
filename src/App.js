@@ -560,7 +560,7 @@ function App() {
         >
           <div className='modal--body_songs-container'>
             {remainingSongsElements}
-            {!remainingSongsElements.length && <p>No more songs to add.</p>}
+            {!remainingSongsElements.length && <p style={{padding: '20px'}}>No more songs to add.</p>}
           </div>
         </Modal>
       }
