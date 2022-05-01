@@ -362,18 +362,6 @@ function App() {
     setIsCreatePlaylistModalShow(true)
   }
 
-  function closeModal(event) {
-    document.querySelector('#modal-container').classList.add('out')
-    document.querySelector('body').classList.remove('modal-active');
-    setTimeout(() => {
-      setIsPlaylistModalShow(false)
-      setIsAddSongToPlaylistModalShow(false)
-      setIsCreatePlaylistModalShow(false)
-    }, 500)
-
-    setIsEditingPlaylist(false)
-  }
-
   function findCurrentPlaylist(playListId) {
     return allPlaylists.find(playlist => (
       playlist.id === playListId
@@ -654,7 +642,10 @@ function App() {
         isPlaylistModalShow &&
         <Modal
           title="Choose a playlist to play"
-          closeModal={closeModal}
+          setIsPlaylistModalShow={setIsPlaylistModalShow}
+          setIsAddSongToPlaylistModalShow={setIsAddSongToPlaylistModalShow}
+          setIsCreatePlaylistModalShow={setIsCreatePlaylistModalShow}
+          setIsEditingPlaylist={setIsEditingPlaylist}
         >
           <div className='modal--body_playlist-container'>
             {
@@ -712,7 +703,10 @@ function App() {
         isAddSongToPlaylistModalShow &&
         <Modal
           title={`Choose song to add to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
-          closeModal={closeModal}
+          setIsPlaylistModalShow={setIsPlaylistModalShow}
+          setIsAddSongToPlaylistModalShow={setIsAddSongToPlaylistModalShow}
+          setIsCreatePlaylistModalShow={setIsCreatePlaylistModalShow}
+          setIsEditingPlaylist={setIsEditingPlaylist}
         >
           <div className='modal--body_songs-container'>
             {remainingSongsElements}
@@ -725,7 +719,10 @@ function App() {
         isCreatePlaylistModalShow &&
         <Modal
           title="Create new playlist"
-          closeModal={closeModal}
+          setIsPlaylistModalShow={setIsPlaylistModalShow}
+          setIsAddSongToPlaylistModalShow={setIsAddSongToPlaylistModalShow}
+          setIsCreatePlaylistModalShow={setIsCreatePlaylistModalShow}
+          setIsEditingPlaylist={setIsEditingPlaylist}
         >
           <div className='modal--body_form-container'>
             <div ref={errorMessage}></div>
