@@ -358,9 +358,6 @@ function App() {
   function openAddSongToPlaylistModal() {
     setIsAddSongToPlaylistModalShow(true)
   }
-  function openCreatePlaylistModal() {
-    setIsCreatePlaylistModalShow(true)
-  }
 
   function findCurrentPlaylist(playListId) {
     return allPlaylists.find(playlist => (
@@ -451,32 +448,6 @@ function App() {
         [name]: value
       }
     ))
-  }
-
-  const errorMessage = useRef()
-
-  function createNewPlaylist(event) {
-    event.preventDefault()
-
-    if (formData.playlistName.trim().length) {
-      setAllPlaylists(prevPlaylists => {
-        return [
-          ...prevPlaylists,
-          {
-            id: nanoid(),
-            name: formData.playlistName,
-            songs: []
-          }
-        ]
-      })
-      errorMessage.current.innerHTML = "<span style='color: green'>Playlist <strong>" + 
-        formData.playlistName + "</strong> has been created successfully!</span>"
-    } else {
-      errorMessage.current.innerHTML = "<span style='color: red'>Please enter a playlist name.</span>"
-    }
-
-    // reset form
-    setFormData(defaultFormData.current)
   }
 
   function deletePlaylist(event, playlistId) {
@@ -601,11 +572,11 @@ function App() {
         playThisSong={playThisSong}
         openPlaylistModal={openPlaylistModal}
         openAddSongToPlaylistModal={openAddSongToPlaylistModal}
-        openCreatePlaylistModal={openCreatePlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
         moveSongToTopList={moveSongToTopList}
         allPlaylists={allPlaylists}
         deleteThisSong={deleteThisSong}
+        setAllPlaylists={setAllPlaylists}
       />
       <br />
       <Mp3Player 
@@ -711,32 +682,6 @@ function App() {
           <div className='modal--body_songs-container'>
             {remainingSongsElements}
             {!remainingSongsElements.length && <p style={{padding: '20px'}}>No more songs to add.</p>}
-          </div>
-        </Modal>
-      }
-
-      {
-        isCreatePlaylistModalShow &&
-        <Modal
-          title="Create new playlist"
-          setIsPlaylistModalShow={setIsPlaylistModalShow}
-          setIsAddSongToPlaylistModalShow={setIsAddSongToPlaylistModalShow}
-          setIsCreatePlaylistModalShow={setIsCreatePlaylistModalShow}
-          setIsEditingPlaylist={setIsEditingPlaylist}
-        >
-          <div className='modal--body_form-container'>
-            <div ref={errorMessage}></div>
-            <form onSubmit={(event) => createNewPlaylist(event)}>
-              <input
-                type="text"
-                name="playlistName"
-                placeholder="Playlist name"
-                autoComplete="off"
-                value={formData.playlistName}
-                onChange={handleFormChange}
-              />
-              <button>Create</button>
-            </form>
           </div>
         </Modal>
       }

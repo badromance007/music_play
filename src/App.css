@@ -694,16 +694,19 @@ html.modal-active, body.modal-active {
 .modal--body_form-container button {
 	padding: 10px;
 	font-weight: bold;
-	color: #5d6d7e;
-	background-color: #fff;
-	border: 1px solid #5d6d7e;
+	color: #5d6d7e !important;
+	background-color: #fff !important;
+	border: 1px solid #5d6d7e !important;
 	cursor: pointer;
 	outline: none;
+	border-radius: 0 !important;
+	width: auto;
+	background:none;
 }
 .modal--body_form-container button:active {
-	color: #fff;
-	background-color: #5d6d7e;
-	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+	color: #fff !important;
+	background-color: #5d6d7e !important;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25) !important;
 }
 .modal--body_songs {
 	height: 50px;
