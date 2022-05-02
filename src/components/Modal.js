@@ -7,8 +7,6 @@ export default function Modal(props) {
         document.querySelector('body').classList.remove('modal-active');
         setTimeout(() => {
             props.setIsPlaylistModalShow(false)
-            props.setIsAddSongToPlaylistModalShow(false)
-            props.setIsCreatePlaylistModalShow(false)
         }, 500)
 
         props.setIsEditingPlaylist(false)

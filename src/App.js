@@ -355,9 +355,6 @@ function App() {
   function openPlaylistModal() {
     setIsPlaylistModalShow(true)
   }
-  function openAddSongToPlaylistModal() {
-    setIsAddSongToPlaylistModalShow(true)
-  }
 
   function findCurrentPlaylist(playListId) {
     return allPlaylists.find(playlist => (
@@ -390,19 +387,17 @@ function App() {
   }
 
   const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
-  const [isCreatePlaylistModalShow, setIsCreatePlaylistModalShow] = useState(false)
-  const [isAddSongToPlaylistModalShow, setIsAddSongToPlaylistModalShow] = useState(false)
   const defaultFormData = useRef({
     playlistName: ''
   })
   const [formData, setFormData] = useState(defaultFormData.current)
   useEffect(() => {
-    if (isPlaylistModalShow || isAddSongToPlaylistModalShow || isCreatePlaylistModalShow) {
+    if (isPlaylistModalShow) {
       document.querySelector('#modal-container').removeAttribute('class')
       document.querySelector('#modal-container').classList.add('fast')
       document.querySelector('body').classList.add('modal-active')
     }
-  }, [isPlaylistModalShow, isAddSongToPlaylistModalShow, isCreatePlaylistModalShow])
+  }, [isPlaylistModalShow])
 
   function addSongToPlaylist(song, playlist) {
     if (currentIndex < 0)
@@ -571,12 +566,13 @@ function App() {
         currentIndex={currentIndex}
         playThisSong={playThisSong}
         openPlaylistModal={openPlaylistModal}
-        openAddSongToPlaylistModal={openAddSongToPlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
         moveSongToTopList={moveSongToTopList}
         allPlaylists={allPlaylists}
         deleteThisSong={deleteThisSong}
         setAllPlaylists={setAllPlaylists}
+        songsData={songsData}
+        addSongToPlaylist={addSongToPlaylist}
       />
       <br />
       <Mp3Player 
@@ -614,8 +610,6 @@ function App() {
         <Modal
           title="Choose a playlist to play"
           setIsPlaylistModalShow={setIsPlaylistModalShow}
-          setIsAddSongToPlaylistModalShow={setIsAddSongToPlaylistModalShow}
-          setIsCreatePlaylistModalShow={setIsCreatePlaylistModalShow}
           setIsEditingPlaylist={setIsEditingPlaylist}
         >
           <div className='modal--body_playlist-container'>
@@ -666,22 +660,6 @@ function App() {
                   </div>
               })
             }
-          </div>
-        </Modal>
-      }
-
-      {
-        isAddSongToPlaylistModalShow &&
-        <Modal
-          title={`Choose song to add to ${truncateString(findCurrentPlaylist(currentPlaylistId).name, 16)}`}
-          setIsPlaylistModalShow={setIsPlaylistModalShow}
-          setIsAddSongToPlaylistModalShow={setIsAddSongToPlaylistModalShow}
-          setIsCreatePlaylistModalShow={setIsCreatePlaylistModalShow}
-          setIsEditingPlaylist={setIsEditingPlaylist}
-        >
-          <div className='modal--body_songs-container'>
-            {remainingSongsElements}
-            {!remainingSongsElements.length && <p style={{padding: '20px'}}>No more songs to add.</p>}
           </div>
         </Modal>
       }

@@ -2,18 +2,20 @@ import Song from "./Song"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { truncateString } from '../helpers/functions';
 import CreatePlaylistButton from "./CreatePlaylistButton";
+import AddSongToPlaylistButton from "./AddSongToPlaylistButton";
 
 export default function Playlist({
     songs,
     currentIndex,
     playThisSong,
     openPlaylistModal,
-    openAddSongToPlaylistModal,
     currentPlaylist,
     moveSongToTopList,
     allPlaylists,
     deleteThisSong,
-    setAllPlaylists
+    setAllPlaylists,
+    songsData,
+    addSongToPlaylist
 }) {
     const songElements = songs.map((song, songIndex) => (
         songs.length > 0 && <Song
@@ -41,12 +43,15 @@ export default function Playlist({
                         <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
                         <span>playlist</span>
                     </CreatePlaylistButton>
-                    <div>
-                        <button onClick={openAddSongToPlaylistModal}>
-                            <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
-                            <span><FontAwesomeIcon icon="fa-solid fa-music" /></span>
-                        </button>
-                    </div>
+
+                    <AddSongToPlaylistButton
+                        currentPlaylist={currentPlaylist()}
+                        songsData={songsData}
+                        addSongToPlaylist={addSongToPlaylist}
+                    >
+                        <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
+                        <span><FontAwesomeIcon icon="fa-solid fa-music" /></span>
+                    </AddSongToPlaylistButton>
                     <div>
                         <button onClick={openPlaylistModal}>
                             <span><FontAwesomeIcon icon="fa-solid fa-headphones-simple" /></span>
