@@ -1,5 +1,5 @@
 import ModalToggler from "./ModalToggler";
-import Modal1 from "./Modal1";
+import Modal from "./Modal";
 import { useRef, useState } from "react";
 import { nanoid } from 'nanoid';
 
@@ -54,7 +54,7 @@ export default function CreatePlaylistButton(props) {
 
                     {
                         on &&
-                        <Modal1
+                        <Modal
                             title="Create new playlist"
                             closeModal={closeModal}
                         >
@@ -72,7 +72,7 @@ export default function CreatePlaylistButton(props) {
                                     <button>Create</button>
                                 </form>
                             </div>
-                        </Modal1>
+                        </Modal>
                     }
                 </div>
             )

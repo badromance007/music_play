@@ -13,6 +13,8 @@ export default function ModalToggler(props) {
         setTimeout(() => {
             setOn(false)
         }, 500)
+
+        props.setIsEditingPlaylist(false)
     }
 
     useEffect(() => {
@@ -34,5 +36,6 @@ export default function ModalToggler(props) {
 
 // set default value for props
 ModalToggler.defaultProps = {
-    defaultOnValue: false
+    defaultOnValue: false,
+    setIsEditingPlaylist: (() => {})
 }

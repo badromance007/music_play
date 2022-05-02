@@ -1,5 +1,5 @@
 import ModalToggler from "./ModalToggler";
-import Modal1 from "./Modal1";
+import Modal from "./Modal";
 import { truncateString } from '../helpers/functions';
 
 export default function AddSongToPlaylistButton(props) { 
@@ -29,7 +29,7 @@ export default function AddSongToPlaylistButton(props) {
 
                     {
                         on &&
-                        <Modal1
+                        <Modal
                             title={`Choose song to add to ${truncateString(props.currentPlaylist.name, 16)}`}
                             closeModal={closeModal}
                         >
@@ -37,7 +37,7 @@ export default function AddSongToPlaylistButton(props) {
                                 {remainingSongsElements}
                                 {!remainingSongsElements.length && <p style={{padding: '20px'}}>No more songs to add.</p>}
                             </div>
-                        </Modal1>
+                        </Modal>
                     }
                 </div>
             )

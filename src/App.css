@@ -626,8 +626,15 @@ html.modal-active, body.modal-active {
 .modal--body_playlist form button{
 	padding: 4px;
 	color: #8a606c;
+	background-image: none;
 	font-weight: bold;
 	cursor: pointer;
+	box-shadow: none;
+	text-shadow: none;
+	background-color: #fff;
+	border: 1px solid #8a606c;
+	padding: 5px 0 5px 0;
+	border-radius: 0;
 }
 .modal--body_playlist span:first-child {
 	display: flex;

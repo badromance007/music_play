@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { truncateString } from '../helpers/functions';
 import CreatePlaylistButton from "./CreatePlaylistButton";
 import AddSongToPlaylistButton from "./AddSongToPlaylistButton";
+import ListPlaylistsButton from "./ListPlaylistsButton";
 
 export default function Playlist({
     songs,
@@ -15,7 +16,8 @@ export default function Playlist({
     deleteThisSong,
     setAllPlaylists,
     songsData,
-    addSongToPlaylist
+    addSongToPlaylist,
+    switchPlaylist
 }) {
     const songElements = songs.map((song, songIndex) => (
         songs.length > 0 && <Song
@@ -52,12 +54,16 @@ export default function Playlist({
                         <span><FontAwesomeIcon icon="fa-solid fa-circle-plus" /></span>
                         <span><FontAwesomeIcon icon="fa-solid fa-music" /></span>
                     </AddSongToPlaylistButton>
-                    <div>
-                        <button onClick={openPlaylistModal}>
-                            <span><FontAwesomeIcon icon="fa-solid fa-headphones-simple" /></span>
-                            <span>playlists</span>
-                        </button>
-                    </div>
+
+                    <ListPlaylistsButton
+                        allPlaylists={allPlaylists}
+                        currentPlaylist={currentPlaylist()}
+                        switchPlaylist={switchPlaylist}
+                        setAllPlaylists={setAllPlaylists}
+                    >
+                        <span><FontAwesomeIcon icon="fa-solid fa-headphones-simple" /></span>
+                        <span>playlists</span>
+                    </ListPlaylistsButton>
                 </div>
             </div>
             <div className="playlist--body">

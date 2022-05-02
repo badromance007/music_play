@@ -6,9 +6,6 @@ import { NO_REPEAT, REPEAT_PLAYLIST, REPEAT_ONE } from './helpers/constants';
 import { shuffle } from './helpers/functions';
 import Playlist from './components/Playlist';
 import { nanoid } from 'nanoid';
-import Modal from './components/Modal';
-import { truncateString } from './helpers/functions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function App() {
 
@@ -352,10 +349,6 @@ function App() {
     }
   }, [])
 
-  function openPlaylistModal() {
-    setIsPlaylistModalShow(true)
-  }
-
   function findCurrentPlaylist(playListId) {
     return allPlaylists.find(playlist => (
       playlist.id === playListId
@@ -382,22 +375,12 @@ function App() {
 
     // update current playlist id
     setCurrentPlaylistId(playListId)
-
-    setIsEditingPlaylist(false)
   }
 
-  const [isPlaylistModalShow, setIsPlaylistModalShow] = useState(false)
   const defaultFormData = useRef({
     playlistName: ''
   })
   const [formData, setFormData] = useState(defaultFormData.current)
-  useEffect(() => {
-    if (isPlaylistModalShow) {
-      document.querySelector('#modal-container').removeAttribute('class')
-      document.querySelector('#modal-container').classList.add('fast')
-      document.querySelector('body').classList.add('modal-active')
-    }
-  }, [isPlaylistModalShow])
 
   function addSongToPlaylist(song, playlist) {
     if (currentIndex < 0)
@@ -416,90 +399,6 @@ function App() {
       oldPlaylist
     )))
   }
-
-  const currentPlaylist = findCurrentPlaylist(currentPlaylistId)
- 
-  const remainingSongs = songsData.filter(oldSong => currentPlaylist.songs.every(song => oldSong.id !== song.id))
-  const remainingSongsElements = remainingSongs.map(song => {
-        return <div
-            key={song.id}
-            className={`modal--body_songs`}
-            onClick={() => addSongToPlaylist(song, currentPlaylist)}
-        >   
-          <span>
-            <img src={song.img} width="40" height="40" />
-          </span>
-          <span>
-            {truncateString((`${song.name} - ${song.singer}`), 80)}
-          </span>
-        </div>
-  })
-
-  function handleFormChange(event) {
-    const { name, value } = event.target
-    setFormData(prevData => (
-      {
-        ...prevData,
-        [name]: value
-      }
-    ))
-  }
-
-  function deletePlaylist(event, playlistId) {
-    event.stopPropagation()
-
-    if (playlistId !== currentPlaylistId)
-      setAllPlaylists(oldPlaylists => oldPlaylists.filter(oldPlaylist => oldPlaylist.id !== playlistId))
-  }
-
-  const [isEditingPlaylist, setIsEditingPlaylist] = useState(false)
-  const [targetingPlaylistId, setTargetingPlaylistId] = useState('')
-
-  function editPlaylist(event, playlistId) {
-    event.stopPropagation()
-
-    if (playlistId !== currentPlaylistId) {
-      setIsEditingPlaylist(prevState => !prevState)
-      setTargetingPlaylistId(playlistId)
-
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        playlistName: findCurrentPlaylist(playlistId).name
-      }))
-    }
-  }
-
-  function preventPopaganda(event) {
-    event.stopPropagation()
-  }
-
-  function updatePlaylistName(event, playlistId) {
-    event.preventDefault()
-
-    if (formData.playlistName.trim().length) {
-      setAllPlaylists(oldPlaylists => oldPlaylists.map(oldPlaylist => (
-        oldPlaylist.id === playlistId ?
-        {
-          ...oldPlaylist,
-          name: formData.playlistName
-        } :
-        oldPlaylist
-      )))
-      // errorMessage.current.innerHTML = "<span style='color: green'>Playlist <strong>" + 
-      //   formData.playlistName + "</strong> has been created successfully!</span>"
-
-      setIsEditingPlaylist(false)
-    } else {
-      // errorMessage.current.innerHTML = "<span style='color: red'>Please enter a playlist name.</span>"
-    }
-  }
-
-  useEffect(() => {
-    if (!isEditingPlaylist) {
-      // reset form
-      setFormData(defaultFormData.current)
-    }
-  }, [isEditingPlaylist])
 
   function moveSongToTopList(event, song) {
     event.stopPropagation()
@@ -565,7 +464,6 @@ function App() {
         songs={songs}
         currentIndex={currentIndex}
         playThisSong={playThisSong}
-        openPlaylistModal={openPlaylistModal}
         currentPlaylist={() => findCurrentPlaylist(currentPlaylistId)}
         moveSongToTopList={moveSongToTopList}
         allPlaylists={allPlaylists}
@@ -573,6 +471,7 @@ function App() {
         setAllPlaylists={setAllPlaylists}
         songsData={songsData}
         addSongToPlaylist={addSongToPlaylist}
+        switchPlaylist={switchPlaylist}
       />
       <br />
       <Mp3Player 
@@ -604,65 +503,6 @@ function App() {
         isMp3PlayerHidden={isMp3PlayerHidden}
         toggleShowingMp3Player={toggleShowingMp3Player}
       />
-
-      {
-        isPlaylistModalShow &&
-        <Modal
-          title="Choose a playlist to play"
-          setIsPlaylistModalShow={setIsPlaylistModalShow}
-          setIsEditingPlaylist={setIsEditingPlaylist}
-        >
-          <div className='modal--body_playlist-container'>
-            {
-              allPlaylists.map(playlist => {
-                  return <div
-                      key={playlist.id}
-                      className={`modal--body_playlist ${currentPlaylistId === playlist.id ? 'bg-purple' : ''}`}
-                      onClick={() => switchPlaylist(playlist.id)}
-                  >   
-                      {
-                        (isEditingPlaylist && playlist.id === targetingPlaylistId)
-                        ?
-                          <form onSubmit={(event, playlistId) => updatePlaylistName(event, playlist.id)}>
-                            <input
-                              type="text"
-                              name="playlistName"
-                              placeholder="Playlist name"
-                              autoComplete="off"
-                              value={formData.playlistName}
-                              onChange={handleFormChange}
-                              onClick={(event) => preventPopaganda(event)}
-                            />
-                            <button onClick={(event) => preventPopaganda(event)}>Update</button>
-                          </form>
-                        :
-                        <span>
-                          {truncateString(playlist.name, 80)}
-                        </span>
-                      }
-                      <div>
-                        {
-                          (currentPlaylistId !== playlist.id && playlist.id !== allPlaylists[0].id) &&
-                          <>
-                            <span
-                              onClick={(event, playlistId) => editPlaylist(event, playlist.id)}
-                            >
-                              <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-                            </span>
-                            <span
-                              onClick={(event, playlistId) => deletePlaylist(event, playlist.id)}
-                            >
-                              <FontAwesomeIcon icon="fa-solid fa-trash-can" />
-                            </span>
-                          </>
-                        }
-                      </div>
-                  </div>
-              })
-            }
-          </div>
-        </Modal>
-      }
     </main>
   );
 }
