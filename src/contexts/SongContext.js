@@ -9,7 +9,7 @@ const SongContext = React.createContext()
 function SongContextProvider({children}) {
     
     // playlist states
-    const [songs, setSongs] = useState(songsData)
+    const [songs, setSongs] = useState(() => JSON.parse(localStorage.getItem('songs')) || songsData)
     const [currentSongId, setCurrentSongId] = useState((songs[0] && songs[0].id) || 0)
     const originalPlayList = useRef(songsData) // use to restore previous songs position when stop shuffling
     const [isPlaying, setIsPlaying] = useState(false)
@@ -56,6 +56,9 @@ function SongContextProvider({children}) {
 
     useEffect(() => {
         localStorage.setItem('allPlaylists', JSON.stringify(allPlaylists))
+
+        let storedSongs = findCurrentPlaylist(currentPlaylistId).songs
+        localStorage.setItem('songs', JSON.stringify(storedSongs))
     }, [allPlaylists])
 
     useEffect(() => {
