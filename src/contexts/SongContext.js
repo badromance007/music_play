@@ -358,19 +358,11 @@ function SongContextProvider({children}) {
     function switchPlaylist(playListId) {
         // update songs
         const currentPlaylist = findCurrentPlaylist(playListId)
-        setSongs(currentPlaylist.songs)
+        const newSongs = currentPlaylist.songs
+        setSongs(newSongs)
 
         // reset all song states
-        pauseSong()
-        originalPlayList.current = currentPlaylist.songs
-        setIsShuffle(false)
-        setIsPlaying(false)
-        setCurrentIndex(currentPlaylist.songs[0] ? 0 : -1)
-        setCurrentSongId(currentPlaylist.songs[0] ? currentPlaylist.songs[0].id : 0)
-        setCurrentPlayingTime(0)
-        setDurationSliderPosition(0)
-        track.current.currentTime = 0;
-        setFullDuration(0)
+        resetAllSongsState(newSongs)
 
         // update current playlist id
         setCurrentPlaylistId(playListId)
@@ -412,16 +404,7 @@ function SongContextProvider({children}) {
 
 
         // reset all song states
-        pauseSong()
-        originalPlayList.current = newSongs
-        setIsShuffle(false)
-        setIsPlaying(false)
-        setCurrentIndex(newSongs[0] ? 0 : -1)
-        setCurrentSongId(newSongs[0] ? newSongs[0].id : 0)
-        setCurrentPlayingTime(0)
-        setDurationSliderPosition(0)
-        track.current.currentTime = 0;
-        setFullDuration(0)
+        resetAllSongsState(newSongs)
     }
 
     function deleteThisSong(event, song) {
@@ -439,6 +422,10 @@ function SongContextProvider({children}) {
         )))
 
         // reset all song states
+        resetAllSongsState(newSongs)
+    }
+
+    function resetAllSongsState(newSongs) {
         pauseSong()
         originalPlayList.current = newSongs
         setIsShuffle(false)
@@ -447,7 +434,7 @@ function SongContextProvider({children}) {
         setCurrentSongId(newSongs[0] ? newSongs[0].id : 0)
         setCurrentPlayingTime(0)
         setDurationSliderPosition(0)
-        track.current.currentTime = 0;
+        track.current.currentTime = 0
         setFullDuration(0)
     }
 
