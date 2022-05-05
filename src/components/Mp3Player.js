@@ -2,8 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getDurationInMinutes } from '../helpers/functions'
 import Visualyzer from './Visualyzer'
 import { REPEAT_PLAYLIST, REPEAT_ONE } from '../helpers/constants';
+import { SongContext } from '../contexts/SongContext';
+import { useContext } from 'react';
 
-export default function Mp3Player(props) {
+export default function Mp3Player() {
+
+    const props = useContext(SongContext)
+
     return (
         <div className={`player ${props.isMp3PlayerHidden ? 'hidden' : ''}`}>
             <p id="logo" onClick={props.toggleShowingMp3Player}>

@@ -4,21 +4,26 @@ import { truncateString } from '../helpers/functions';
 import CreatePlaylistButton from "./CreatePlaylistButton";
 import AddSongToPlaylistButton from "./AddSongToPlaylistButton";
 import ListPlaylistsButton from "./ListPlaylistsButton";
+import { SongContext } from "../contexts/SongContext";
+import { useContext } from "react";
 
-export default function Playlist({
-    songs,
-    currentIndex,
-    playThisSong,
-    openPlaylistModal,
-    currentPlaylist,
-    moveSongToTopList,
-    allPlaylists,
-    deleteThisSong,
-    setAllPlaylists,
-    songsData,
-    addSongToPlaylist,
-    switchPlaylist
-}) {
+export default function Playlist() {
+
+    const {
+        songs,
+        currentIndex,
+        playThisSong,
+        openPlaylistModal,
+        currentPlaylist,
+        moveSongToTopList,
+        allPlaylists,
+        deleteThisSong,
+        setAllPlaylists,
+        songsData,
+        addSongToPlaylist,
+        switchPlaylist
+    } = useContext(SongContext)
+
     const songElements = songs.map((song, songIndex) => (
         songs.length > 0 && <Song
             key={song.id}
