@@ -66,10 +66,7 @@ export default function Mp3Player() {
                     }
                     
 
-                    <Visualyzer
-                        visualyzer={props.visualyzer}
-                        isPlaying={props.isPlaying}
-                    />
+                    <Visualyzer />
                 </div>
                 <div className='volume'>
                     <p id='volume--show'>{ volume }</p>

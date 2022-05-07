@@ -37,13 +37,8 @@ function SongContextProvider({children}) {
     const [repeat, setRepeat] = useState(NO_REPEAT)
     const [isShuffle, setIsShuffle] = useState(false)
 
-    // audio track & visualiser
-    const visualyzer = useRef()
+    // audio track
     const track = useRef()
-
-    //  audio context & audio media source
-    const audioContext = useRef()
-    const audioSource = useRef()
 
     // control mp3Player on mobile
     const [isMp3PlayerHidden, setIsMp3PlayerHidden] = useState(false)
@@ -110,50 +105,6 @@ function SongContextProvider({children}) {
         if (currentIndex >= 0 && currentSongId) {
             track.current.play();
         }
-
-        if (!audioContext.current) {
-            createVisualyzer();
-        }
-    }
-
-    function createVisualyzer() {
-        audioContext.current = audioContext.current || new AudioContext()
-        audioSource.current = audioSource.current || audioContext.current.createMediaElementSource(track.current)
-        const analyser = audioContext.current.createAnalyser();
-
-        audioSource.current.connect(analyser)
-        analyser.connect(audioContext.current.destination)
-        analyser.fftSize = 64
-
-        const bufferLength = analyser.frequencyBinCount
-        let dataArray = new Uint8Array(bufferLength)
-
-        let elements = []
-        for(let i = 0; i < bufferLength; i++) {
-            const element = document.createElement('span')
-            element.classList.add('visualyzer--element')
-            elements.push(element)
-            visualyzer.current.appendChild(element)
-        }
-
-        const clamp = (num, min, max) => {
-            if (num >= max) return max
-            if (num <= min) return min
-            return num
-        }
-
-        function animate() {
-            requestAnimationFrame(animate)
-            analyser.getByteFrequencyData(dataArray)
-            
-            for(let i = 0; i < bufferLength; i++) {
-                let item = dataArray[i]
-                item = item > 90 ? item / 3 : item * 1.95
-                elements[i].style.transform = `rotateZ(${i * (360 / bufferLength)}deg) translate(-50%, ${clamp(item, 60, 90)}px)`
-            }
-        }
-
-        animate()
     }
 
     function pauseSong() {
@@ -369,7 +320,6 @@ function SongContextProvider({children}) {
             oldPlaylist
         )))
 
-
         // reset all song states
         resetAllSongsState(newSongs)
     }
@@ -432,7 +382,6 @@ function SongContextProvider({children}) {
             fullDuration,
             durationSliderPosition,
             endSong,
-            visualyzer,
             handleRepeat,
             repeat,
             shuffleSong,
