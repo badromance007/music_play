@@ -71,7 +71,7 @@ export default function Playlist() {
                     </ListPlaylistsButton>
                 </div>
             </div>
-            <div className="playlist--body">
+            <div className="playlist--body hide-scrollbar">
                 {songElements}
                 {
                     !songElements.length &&
