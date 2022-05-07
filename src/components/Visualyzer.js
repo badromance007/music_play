@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef } from "react"
 import { SongContext } from '../contexts/SongContext';
+import { clamp } from '../helpers/functions';
 
 export default function Visualyzer() {
     const visualyzer = useRef()
@@ -26,12 +27,6 @@ export default function Visualyzer() {
             element.classList.add('visualyzer--element')
             elements.push(element)
             visualyzer.current.appendChild(element)
-        }
-
-        const clamp = (num, min, max) => {
-            if (num >= max) return max
-            if (num <= min) return min
-            return num
         }
 
         function animate() {
