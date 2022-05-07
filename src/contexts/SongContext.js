@@ -30,8 +30,6 @@ function SongContextProvider({children}) {
     // audio's duration states & duration slider
     const [currentPlayingTime, setCurrentPlayingTime] = useState(0)
     const [fullDuration, setFullDuration] = useState(0) 
-    const [durationSliderPosition, setDurationSliderPosition] = useState(0)
-    const durationSlider = useRef()
 
     // repeat & shuffle state
     const [repeat, setRepeat] = useState(NO_REPEAT)
@@ -66,28 +64,10 @@ function SongContextProvider({children}) {
     }, [currentIndex, currentSongId, currentPlaylistId])
 
     function loadTrack() {
-        resetDurationSlider()
-
         if (songs.length) {
             track.current.src = songs[currentIndex].path;
             track.current.load();
         }
-    }
-
-    function songPlaying(){
-        let position = 0;
-            
-        // update slider position
-        if(!isNaN(track.current.duration)){
-            position = track.current.currentTime * (100 / track.current.duration);
-            
-            setCurrentPlayingTime(track.current.currentTime)
-            setDurationSliderPosition(position)
-        }
-    }
-
-    function resetDurationSlider(){
-        setDurationSliderPosition(0)
     }
 
     // Play or pause song
@@ -125,23 +105,6 @@ function SongContextProvider({children}) {
             prevIndex + 1 :
             0
         ))
-    }
-
-    function changeDuration() {
-        let position = 0
-        let currentTime = 0
-            
-        // update slider position & track's currentTime
-        if(!isNaN(track.current.duration)){
-            position = track.current.currentTime * (100 / track.current.duration)
-            currentTime = track.current.duration * (durationSlider.current.value / 100)
-            
-            setCurrentPlayingTime(track.current.currentTime)
-            setDurationSliderPosition(position)
-
-            // change track's currentTime when duration slider changed
-            track.current.currentTime = currentTime;
-        }
     }
 
     function audioLoaded() {
@@ -350,7 +313,6 @@ function SongContextProvider({children}) {
         setCurrentIndex(newSongs[0] ? 0 : -1)
         setCurrentSongId(newSongs[0] ? newSongs[0].id : 0)
         setCurrentPlayingTime(0)
-        setDurationSliderPosition(0)
         track.current.currentTime = 0
         setFullDuration(0)
     }
@@ -359,6 +321,7 @@ function SongContextProvider({children}) {
         <SongContext.Provider value={{
             songs,
             currentSongId,
+            currentPlaylistId,
             currentIndex,
             playThisSong,
             currentPlaylist: () => findCurrentPlaylist(currentPlaylistId),
@@ -369,25 +332,22 @@ function SongContextProvider({children}) {
             songsData,
             addSongToPlaylist,
             switchPlaylist,
-            songPlaying,
             track,
             prevSong,
             justPlay,
             isPlaying,
             nextSong,
-            changeDuration,
-            durationSlider,
             currentPlayingTime,
             audioLoaded,
             fullDuration,
-            durationSliderPosition,
             endSong,
             handleRepeat,
             repeat,
             shuffleSong,
             isShuffle,
             isMp3PlayerHidden,
-            toggleShowingMp3Player
+            toggleShowingMp3Player,
+            setCurrentPlayingTime
         }}>
             {children}
         </SongContext.Provider>

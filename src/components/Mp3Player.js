@@ -12,16 +12,12 @@ export default function Mp3Player() {
     const volumeSlider= useRef()
     const [mute, setMute] = useState(false)
 
+    // global context as props
     const props = useContext(SongContext)
 
-    function muteSound() {
-        // store previous volume for later resume when mute = false
-        if (!mute) {
-             prevVolume.current = volume
-        }
-
-        setMute(prevMute => !prevMute)
-    }
+    // duration slider
+    const [durationSliderPosition, setDurationSliderPosition] = useState(0)
+    const durationSlider = useRef()
 
     // update track's volume when volume changed
     useEffect(() => {
@@ -39,10 +35,54 @@ export default function Mp3Player() {
         })
     }, [mute])
 
+    // reset duration slider
+    useEffect(() => {
+        setDurationSliderPosition(0)
+    }, [props.currentIndex, props.currentSongId, props.currentPlaylistId])
+
+    function muteSound() {
+        // store previous volume for later resume when mute = false
+        if (!mute) {
+             prevVolume.current = volume
+        }
+
+        setMute(prevMute => !prevMute)
+    }
+
      // change volume
      function changeVolume() {
         setVolume(volumeSlider.current.value)
     }
+
+    function changeDuration() {
+        let position = 0
+        let currentTimeAfterSliding = 0
+
+        // update slider position & track's currentTime
+        if(!isNaN(props.track.current.duration)){
+            position = props.track.current.currentTime * (100 / props.track.current.duration)
+            currentTimeAfterSliding = props.track.current.duration * (durationSlider.current.value / 100)
+
+            props.setCurrentPlayingTime(props.track.current.currentTime)
+            setDurationSliderPosition(position)
+
+            // change track's currentTime when duration slider changed
+            props.track.current.currentTime = currentTimeAfterSliding;
+        }
+    }
+
+    function songPlaying(){
+        let position = 0;
+
+        // update slider position
+        if(!isNaN(props.track.current.duration)){
+            position = props.track.current.currentTime * (100 / props.track.current.duration);
+
+            props.setCurrentPlayingTime(props.track.current.currentTime)
+            setDurationSliderPosition(position)
+        }
+    }
+
 
     return (
         <div className={`player ${props.isMp3PlayerHidden ? 'hidden' : ''}`}>
@@ -102,7 +142,7 @@ export default function Mp3Player() {
                     <audio
                         ref={props.track}
                         hidden={true}
-                        onTimeUpdate={props.songPlaying}
+                        onTimeUpdate={songPlaying}
                         onLoadedData={props.audioLoaded}
                         onEnded={props.endSong}
                     />
@@ -146,7 +186,7 @@ export default function Mp3Player() {
 
                 {/* song duration part */}
                 <div className='duration'>
-                    <input type="range" min="0" max="100" value={props.durationSliderPosition}  onChange={props.changeDuration} ref={props.durationSlider} />
+                    <input type="range" min="0" max="100" value={durationSliderPosition}  onChange={changeDuration} ref={durationSlider} />
                     <p className='duration--display'>{ getDurationInMinutes(props.currentPlayingTime) } / {getDurationInMinutes(props.fullDuration)}</p>
                 </div>
             </div>
