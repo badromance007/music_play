@@ -27,12 +27,6 @@ function SongContextProvider({children}) {
     )
     const [currentPlaylistId, setCurrentPlaylistId] = useState((allPlaylists[0] && allPlaylists[0].id) || '')
 
-    // volume states & volume slider and mute state
-    const [volume, setVolume] = useState(100)
-    const prevVolume = useRef(0) // store previous volume
-    const volumeSlider= useRef()
-    const [mute, setMute] = useState(false)
-
     // audio's duration states & duration slider
     const [currentPlayingTime, setCurrentPlayingTime] = useState(0)
     const [fullDuration, setFullDuration] = useState(0) 
@@ -76,22 +70,6 @@ function SongContextProvider({children}) {
             document.title = findCurrentPlaylist(currentPlaylistId).name
     }, [currentIndex, currentSongId, currentPlaylistId])
 
-    // update track's volume when volume changed
-    useEffect(() => {
-        track.current.volume = volume / 100
-    }, [volume])
-
-    // change volume to 0 when mute = true, if not use previous volume state
-    useEffect(() => {
-        setVolume(prevSound => {
-            if(!mute) {
-                return prevVolume.current > 0 ? prevVolume.current : prevSound
-            } else {
-                return 0
-            }
-        })
-    }, [mute])
-
     function loadTrack() {
         resetDurationSlider()
 
@@ -115,11 +93,6 @@ function SongContextProvider({children}) {
 
     function resetDurationSlider(){
         setDurationSliderPosition(0)
-    }
-
-    // change volume
-    function changeVolume() {
-        setVolume(volumeSlider.current.value)
     }
 
     // Play or pause song
@@ -218,15 +191,6 @@ function SongContextProvider({children}) {
             // change track's currentTime when duration slider changed
             track.current.currentTime = currentTime;
         }
-    }
-
-    function muteSound() {
-        // store previous volume for later resume when mute = false
-        if (!mute) {
-             prevVolume.current = volume
-        }
-
-        setMute(prevMute => !prevMute)
     }
 
     function audioLoaded() {
@@ -455,11 +419,6 @@ function SongContextProvider({children}) {
             songsData,
             addSongToPlaylist,
             switchPlaylist,
-            volume,
-            muteSound,
-            mute,
-            changeVolume,
-            volumeSlider,
             songPlaying,
             track,
             prevSong,

@@ -3,11 +3,46 @@ import { getDurationInMinutes } from '../helpers/functions'
 import Visualyzer from './Visualyzer'
 import { REPEAT_PLAYLIST, REPEAT_ONE } from '../helpers/constants';
 import { SongContext } from '../contexts/SongContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 export default function Mp3Player() {
+    // volume states & volume slider and mute state
+    const [volume, setVolume] = useState(100)
+    const prevVolume = useRef(0) // store previous volume
+    const volumeSlider= useRef()
+    const [mute, setMute] = useState(false)
 
     const props = useContext(SongContext)
+
+    function muteSound() {
+        // store previous volume for later resume when mute = false
+        if (!mute) {
+             prevVolume.current = volume
+        }
+
+        setMute(prevMute => !prevMute)
+    }
+
+    // update track's volume when volume changed
+    useEffect(() => {
+        props.track.current.volume = volume / 100
+    }, [volume])
+
+    // change volume to 0 when mute = true, if not use previous volume state
+    useEffect(() => {
+        setVolume(prevSound => {
+            if(!mute) {
+                return prevVolume.current > 0 ? prevVolume.current : prevSound
+            } else {
+                return 0
+            }
+        })
+    }, [mute])
+
+     // change volume
+     function changeVolume() {
+        setVolume(volumeSlider.current.value)
+    }
 
     return (
         <div className={`player ${props.isMp3PlayerHidden ? 'hidden' : ''}`}>
@@ -37,17 +72,17 @@ export default function Mp3Player() {
                     />
                 </div>
                 <div className='volume'>
-                    <p id='volume--show'>{ props.volume }</p>
-                    <span id="volume_icon" onClick={props.muteSound}>
+                    <p id='volume--show'>{ volume }</p>
+                    <span id="volume_icon" onClick={muteSound}>
                     {
-                        props.mute
+                        mute
                         ?
                         <FontAwesomeIcon icon="fa-solid fa-volume-xmark" />
                         :
                         <FontAwesomeIcon icon="fa-solid fa-volume-high" />
                     }
                     </span>
-                    <input type="range" min="0" max="100" value={props.volume} onChange={props.changeVolume} id="volume" ref={props.volumeSlider} />
+                    <input type="range" min="0" max="100" value={volume} onChange={changeVolume} id="volume" ref={volumeSlider} />
                 </div>
             </div>
 
