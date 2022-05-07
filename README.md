@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Live website is at: [musicplayoh.web.app](https://musicplayoh.web.app).
+Live website is at: [musicplayooh.web.app](https://musicplayooh.web.app).
 
 ## Available Scripts
 
