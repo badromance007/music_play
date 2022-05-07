@@ -223,4 +223,12 @@ export const songsData = [
         singer: 'Enrique Iglesias',
         album: 'Euphoria'
     },
+    {
+        id: 29,
+        name: 'Another Day',
+        path: 'music/another_day.mp3',
+        img: 'images/another_day.jpg',
+        singer: 'Punch, Monday Kiz',
+        album: 'Hotel Del Luna OST'
+    },
 ]
