@@ -13,7 +13,6 @@ export default function Playlist() {
         songs,
         currentIndex,
         playThisSong,
-        openPlaylistModal,
         currentPlaylist,
         moveSongToTopList,
         allPlaylists,
