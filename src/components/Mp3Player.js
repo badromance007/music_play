@@ -19,6 +19,8 @@ export default function Mp3Player() {
     const [durationSliderPosition, setDurationSliderPosition] = useState(0)
     const durationSlider = useRef()
 
+    const [fullDuration, setFullDuration] = useState(0)
+
     // update track's volume when volume changed
     useEffect(() => {
         props.track.current.volume = volume / 100
@@ -38,6 +40,7 @@ export default function Mp3Player() {
     // reset duration slider
     useEffect(() => {
         setDurationSliderPosition(0)
+        setFullDuration(0)
     }, [props.currentIndex, props.currentSongId, props.currentPlaylistId])
 
     function muteSound() {
@@ -83,6 +86,9 @@ export default function Mp3Player() {
         }
     }
 
+    function audioLoaded() {
+        setFullDuration(props.track.current.duration)
+    }
 
     return (
         <div className={`player ${props.isMp3PlayerHidden ? 'hidden' : ''}`}>
@@ -143,7 +149,7 @@ export default function Mp3Player() {
                         ref={props.track}
                         hidden={true}
                         onTimeUpdate={songPlaying}
-                        onLoadedData={props.audioLoaded}
+                        onLoadedData={audioLoaded}
                         onEnded={props.endSong}
                     />
                     <button
@@ -187,7 +193,7 @@ export default function Mp3Player() {
                 {/* song duration part */}
                 <div className='duration'>
                     <input type="range" min="0" max="100" value={durationSliderPosition}  onChange={changeDuration} ref={durationSlider} />
-                    <p className='duration--display'>{ getDurationInMinutes(props.currentPlayingTime) } / {getDurationInMinutes(props.fullDuration)}</p>
+                    <p className='duration--display'>{ getDurationInMinutes(props.currentPlayingTime) } / {getDurationInMinutes(fullDuration)}</p>
                 </div>
             </div>
         </div>

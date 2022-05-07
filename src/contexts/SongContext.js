@@ -29,7 +29,6 @@ function SongContextProvider({children}) {
 
     // audio's duration states & duration slider
     const [currentPlayingTime, setCurrentPlayingTime] = useState(0)
-    const [fullDuration, setFullDuration] = useState(0) 
 
     // repeat & shuffle state
     const [repeat, setRepeat] = useState(NO_REPEAT)
@@ -105,10 +104,6 @@ function SongContextProvider({children}) {
             prevIndex + 1 :
             0
         ))
-    }
-
-    function audioLoaded() {
-        setFullDuration(track.current.duration)
     }
 
     // will run when the song is over
@@ -314,7 +309,6 @@ function SongContextProvider({children}) {
         setCurrentSongId(newSongs[0] ? newSongs[0].id : 0)
         setCurrentPlayingTime(0)
         track.current.currentTime = 0
-        setFullDuration(0)
     }
 
     return (
@@ -338,8 +332,6 @@ function SongContextProvider({children}) {
             isPlaying,
             nextSong,
             currentPlayingTime,
-            audioLoaded,
-            fullDuration,
             endSong,
             handleRepeat,
             repeat,
