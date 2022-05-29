@@ -7,6 +7,11 @@ import { nanoid } from 'nanoid';
 const SongContext = React.createContext()
 
 function SongContextProvider({children}) {
+
+    // update localstorage if seeds changed
+    if (songsData.length !== JSON.parse(localStorage.getItem('songs'))?.length) {
+        localStorage.clear()
+    }
     
     // playlist states
     const [songs, setSongs] = useState(() => JSON.parse(localStorage.getItem('songs')) || songsData)

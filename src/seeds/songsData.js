@@ -231,4 +231,20 @@ export const songsData = [
         singer: 'Punch, Monday Kiz',
         album: 'Hotel Del Luna OST'
     },
+    {
+        id: 30,
+        name: 'KHI CÔ ĐƠN EM NHỚ AI (LOFI MUSIC)',
+        path: 'music/khi_co_don_em_nho_ai.mp3',
+        img: 'images/khi_co_don_em_nho_ai.jpg',
+        singer: 'VICKY NHUNG x LONG REX',
+        album: 'CHILL WITH VICKY NHUNG (SEASON 2)'
+    },
+    {
+        id: 31,
+        name: 'MƯA THÁNG TƯ',
+        path: 'music/mua_thang_tu.mp3',
+        img: 'images/mua_thang_tu.jpg',
+        singer: 'HƯƠNG LY',
+        album: 'HƯƠNG LY COVER'
+    },
 ]
