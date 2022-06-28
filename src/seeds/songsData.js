@@ -247,4 +247,20 @@ export const songsData = [
         singer: 'HƯƠNG LY',
         album: 'HƯƠNG LY COVER'
     },
+    {
+        id: 32,
+        name: 'Đâu Ai Bên Nhau Được Mãi',
+        path: 'music/dau_ai_ben_nhau_duoc_mai.mp3',
+        img: 'images/dau_ai_ben_nhau_duoc_mai.jpeg',
+        singer: 'Châu Dương',
+        album: 'Nhạc Hot TikTok 2022'
+    },
+    {
+        id: 33,
+        name: 'YÊU RỒI',
+        path: 'music/yeu_roi.mp3',
+        img: 'images/yeu_roi.jpeg',
+        singer: 'TINO',
+        album: 'OST Gạo Nếp Gạo Tẻ'
+    },
 ]
